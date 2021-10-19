@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/fuck"
+    tools:context=".LoginActivity" >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/a1" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imageFitness"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/fuck"-->
+<!--        android:layout_below="@id/Login2Button"/>-->
+
+    <EditText
+        android:id="@+id/usernameLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"
+        android:textSize="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/imageView"/>
+
+    <EditText
+        android:id="@+id/passwordLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:layout_marginTop="50dp"
+        android:textSize="25dp"
+        android:layout_below="@id/usernameLogin"/>
+
+
+    <Button
+        android:id="@+id/Login2Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:layout_below="@id/passwordLogin"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"/>
+
+
+
+
+
+
+
+</RelativeLayout>
