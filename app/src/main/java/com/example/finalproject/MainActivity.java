@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,12 +35,34 @@ public class MainActivity extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
-                if(user.equals("") || pass.equals(null)) {
+                if(user.equals("") || pass.equals("")) {
                     Toast.makeText(MainActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
+                    Boolean usercheckResult = myDB.checkusername(user);
+                    if(usercheckResult == false) {
+                       Boolean regResult = myDB.insertData(user,pass);
+                       if(regResult == true) {
+                           Toast.makeText(MainActivity.this, "Profile Successfully made.", Toast.LENGTH_SHORT).show();
+                           Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                           startActivity(intent);
+                       } else {
+                           Toast.makeText(MainActivity.this, "Sign Up was not successful.", Toast.LENGTH_SHORT).show();
+                       }
+
+                    } else {
+                        Toast.makeText(MainActivity.this, "Username is already Taken.", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 
+            }
+        });
+
+        LogInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
             }
         });
 
