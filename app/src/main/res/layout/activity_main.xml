@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background1"
     android:padding="10dp"
-    android:background="@drawable/download"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -19,45 +19,41 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/imageView"
         android:hint="Enter Username"
-        android:textSize="25dp"
-        android:layout_below="@id/imageView"/>
+        android:textSize="25dp" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Password"
+        android:layout_below="@id/username"
         android:layout_marginTop="50dp"
-        android:textSize="25dp"
-        android:layout_below="@id/username"/>
+        android:hint="Enter Password"
+        android:textSize="25dp" />
 
 
     <Button
         android:id="@+id/SignUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
         android:text="Sign Up"
         android:textAllCaps="false"
-        android:layout_below="@id/password"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:textSize="25dp"
-        android:layout_marginTop="20dp"/>
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/LogInButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/SignUpButton"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
         android:text="Already have an account? Log In"
         android:textAllCaps="false"
-        android:layout_below="@id/SignUpButton"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:textSize="25dp"
-        android:layout_marginTop="20dp"/>
-
-
-
-
+        android:textSize="25dp" />
 
 
 </RelativeLayout>
