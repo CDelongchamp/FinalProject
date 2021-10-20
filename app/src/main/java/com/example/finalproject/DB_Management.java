@@ -72,7 +72,7 @@ public class DB_Management extends SQLiteOpenHelper {
         myDB.execSQL("INSERT INTO class_types(class_type, description) VALUES(\"Karate\", \"Half Art, Half Combat\")");
         myDB.execSQL("INSERT INTO class_types(class_type, description) VALUES(\"Mortal Combat\", \"Nothing like Immortal Combat\")");
 
-        myDB.execSQL("INSERT INTO users(username, password) VALUES(\"admin\", \"123\")");
+        myDB.execSQL("INSERT INTO users(username, password) VALUES(\"admin\", \"admin123\")");
 
         myDB.execSQL("INSERT INTO roles(user_id, role_id) VALUES(\"admin\",\"1\")");
 
