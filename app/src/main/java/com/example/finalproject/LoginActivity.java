@@ -13,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText username,password;
     Button Login2Button;
+    Button registerButton;
     DB_Management myDB;
 
     @Override
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.usernameLogin);
         password = (EditText) findViewById(R.id.passwordLogin);
         Login2Button = (Button) findViewById(R.id.btn_login);
+        registerButton = (Button) findViewById(R.id.btn_register);
 
         myDB = new DB_Management(this );
 
@@ -44,6 +46,14 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Invalid Login.", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),SignUpActivity.class);
+                startActivity(intent);
             }
         });
 
