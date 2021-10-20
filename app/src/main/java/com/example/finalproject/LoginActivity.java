@@ -53,7 +53,5 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public static String getUser() {
-        return user;
-    }
+
 }
