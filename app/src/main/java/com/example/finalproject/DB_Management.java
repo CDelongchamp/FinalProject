@@ -43,7 +43,7 @@ public class DB_Management extends SQLiteOpenHelper {
                 "instructor interger," +
                 "FOREIGN KEY(type) REFERENCES class_types(class_type)," +
                 "FOREIGN KEY(difficulty) REFERENCES class_difficulties(difficulty_id)," +
-                "FOREIGN KEY(instructor) REFERENCES users(user_id))");
+                "FOREIGN KEY(instructor) REFERENCES users(username))");
 
         myDB.execSQL("CREATE TABLE roles(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -83,9 +83,10 @@ public class DB_Management extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int oldVersion, int newVersion) {
         myDB.execSQL("drop Table if exists users");
+        // TODO: Figure out a better way of doing this.
     }
 
-    public Boolean insertData(String username, String password) {
+    public Boolean insertData(String username, String password) { // TODO: fix this so that it has a more accurate name.
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", username);
@@ -99,7 +100,52 @@ public class DB_Management extends SQLiteOpenHelper {
         }
     }
 
-    public Boolean checkusername(String username) {
+    /**
+     *
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @param is_instructor A boolean if the user wants to be an instructor
+     * @param is_member A boolean if the user wants to be a member.
+     * @return Returns 0 if successful, 1 if the user exists, 2 if there was an error adding the instructor role, 3 if there was an error adding the member role.
+     */
+    public int insertNewUser(String username, String password, boolean is_instructor, boolean is_member) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "INSERT INTO users(username,password) VALUES(" + username + ", " + password + ")";
+
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            // Good, no return.
+        }else{
+            return 1;
+        }
+        if(is_instructor) {
+            query = "INSERT INTO roles(user_id, role_id) VALUES(" + username + ", " + 2 + ")"; // XXX hard coded role.
+
+            cursor = db.rawQuery(query, null);
+            if (cursor.moveToFirst()) {
+                // Good, no return.
+            } else {
+                return 2;
+            }
+        }
+        if(is_member) {
+            query = "INSERT INTO roles(user_id, role_id) VALUES(" + username + ", " + 3 + ")"; // XXX hard coded role.
+
+            cursor = db.rawQuery(query, null);
+            if (cursor.moveToFirst()) {
+                // Good, no return.
+            } else {
+                return 3;
+            }
+        }
+
+        return 0;
+
+
+    }
+
+    public Boolean checkUsername(String username) {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery("select * from users where username = ?",new String[] {username});
         if(cursor.getCount()>0) {
@@ -119,6 +165,51 @@ public class DB_Management extends SQLiteOpenHelper {
             return false;
         }
     }
+
+    /** Method to add a class to the class table.
+     *
+     * @param type The type of class, like Yoga.
+     * @param difficulty the difficulty of the class, must be one present in the class_difficulties table.
+     * @param start_time the start time in UTC.
+     * @param end_time the end time in UTC
+     * @param capacity Capacity of the class.
+     * @param instructor the username of the user who is instructing this class. This will technically allow a member to be an instructor.
+     * @return Returns true if it has been added, false otherwise.
+     */
+    public Boolean createClass(String type, String difficulty, int start_time, int end_time, int capacity, int instructor){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "INSERT INTO classes (type,difficulty,start_time,end_time,capacity,instructor) VALUES(" + type + ", " + difficulty + ", " + start_time + ", " + end_time +", " + capacity + ", " + instructor + " )";
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param class_id the class_id from the class table to be deleted.
+     * @return returns true if deleted, otherwise returns false.
+     */
+    public Boolean deleteClass(int class_id){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "DELETE FROM classes WHERE class_id =" + class_id;
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+
+
+
 
 
 
