@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
+import android.text.BoringLayout;
 
 public class DB_Management extends SQLiteOpenHelper {
 
@@ -49,15 +50,15 @@ public class DB_Management extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "user_id TEXT, " +
                 "role_id TEXT," +
-                "FOREIGN KEY(user_id) REFERENCES users(username)," +
+                "FOREIGN KEY(user_id) REFERENCES users(username) ON DELETE CASCADE," +
                 "FOREIGN KEY(role_id) REFERENCES role_types(role_id)) ");
 
         myDB.execSQL("CREATE TABLE class_enrolment(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "user_id TEXT," +
                 "class_id TEXT," +
-                "FOREIGN KEY(user_id) REFERENCES users(username)," +
-                "FOREIGN KEY(class_id) REFERENCES classes(class_id))");
+                "FOREIGN KEY(user_id) REFERENCES users(username) ON DELETE CASCADE," +
+                "FOREIGN KEY(class_id) REFERENCES classes(class_id) ON DELETE CASCADE)");
 
         myDB.execSQL("INSERT INTO class_difficulties(difficulty_id) VALUES(\"easy\")");
         myDB.execSQL("INSERT INTO class_difficulties(difficulty_id) VALUES(\"medium\")");
@@ -143,6 +144,23 @@ public class DB_Management extends SQLiteOpenHelper {
         return 0;
 
 
+    }
+
+    /** Method tells the database to delete user. Will also cascade delete that user from enrolled classes and any roles they have.
+     *
+     * @param username the user to delete from the database.
+     * @return Returns true if successful, false otherwise.
+     */
+    public Boolean deleteUser(String username){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "DELETE FROM users WHERE username =" + username;
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public Boolean checkUsername(String username) {
