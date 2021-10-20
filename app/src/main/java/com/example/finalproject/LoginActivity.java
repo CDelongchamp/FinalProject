@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.usernameLogin);
         password = (EditText) findViewById(R.id.passwordLogin);
-        Login2Button = (Button) findViewById(R.id.Login2Button);
+        Login2Button = (Button) findViewById(R.id.btn_login);
 
         myDB = new DB_Management(this );
 
