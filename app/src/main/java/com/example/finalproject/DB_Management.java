@@ -163,6 +163,42 @@ public class DB_Management extends SQLiteOpenHelper {
         }
     }
 
+    /** Method takes in both the username and the role_id and deletes the corresponding pair in the database.
+     *
+     * @param username the username of the role to be deleted.
+     * @param role_id the role of the user to be deleted.
+     * @return returns true if successful, false otherwise.
+     */
+    public Boolean deleteRole(String username, int role_id){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "DELETE FROM roles WHERE username =" + username + " AND role_id = " + role_id;
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /** Method deletes a users Member role from the role table. Helper method.
+     *
+     * @param username whos member role is to be deleted.
+     * @return returns true if successful, false otherwise.
+     */
+    public Boolean deleteMemberRole(String username){
+        return deleteRole(username, 3);
+    }
+    
+    /** Method deletes a users Instructor role from the role table. Helper method.
+     *
+     * @param username whos Instructor role is to be deleted.
+     * @return returns true if successful, false otherwise.
+     */
+    public Boolean deleteInstructorRole(String username){
+        return deleteRole(username, 2);
+    }
+
     public Boolean checkUsername(String username) {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery("select * from users where username = ?",new String[] {username});
