@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static String user;
     EditText username,password;
     Button Login2Button;
     Button registerButton;
@@ -26,20 +27,20 @@ public class LoginActivity extends AppCompatActivity {
         Login2Button = (Button) findViewById(R.id.btn_login);
         registerButton = (Button) findViewById(R.id.btn_register);
 
-        myDB = new DB_Management(this );
+        myDB = new DB_Management(this);
 
         Login2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = username.getText().toString();
+                user = username.getText().toString();
                 String pass = password.getText().toString();
 
-                if(user.equals("") || pass.equals("")) {
+                if (user.equals("") || pass.equals("")) {
                     Toast.makeText(LoginActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Boolean result = myDB.checkusernamePassword(user,pass);
-                    if(result == true) {
-                        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                    Boolean result = myDB.checkusernamePassword(user, pass);
+                    if (result == true) {
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
 
                     } else {
@@ -58,5 +59,9 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+
+
     }
+
+
 }
