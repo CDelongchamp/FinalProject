@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 if(user.equals("") || pass.equals("")) {
                     Toast.makeText(MainActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Boolean usercheckResult = myDB.checkusername(user);
+                    Boolean usercheckResult = myDB.checkUsername(user);
                     if(usercheckResult == false) {
                        Boolean regResult = myDB.insertData(user,pass);
                        if(regResult == true) {
