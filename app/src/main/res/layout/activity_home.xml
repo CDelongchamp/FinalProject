@@ -7,7 +7,7 @@
     tools:context=".HomeActivity">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/selectMember"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/selectInstructor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -30,17 +30,17 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/selectMember" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/selectAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="154dp"
         android:text="Administration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/selectInstructor" />
 
     <TextView
         android:id="@+id/textView"
