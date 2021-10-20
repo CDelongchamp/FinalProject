@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 
+import java.util.List;
+
 
 public class DB_Management extends SQLiteOpenHelper {
 
@@ -295,6 +297,26 @@ public class DB_Management extends SQLiteOpenHelper {
             cursor.close();
             return false;
         }
+    }
+
+    /**
+     * Method returns a list of roles a specific user has.
+     * @param username the user we are checking for roles.
+     * @return a array of strings that contain the results.
+     */
+    public String[] getUserRoles(String username){
+        String[] results = new String[3];
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "SELECT * FROM roles WHERE user_id = " + username;
+        Cursor cursor = db.rawQuery(query, null);
+
+        int i = 0;
+        do{ cursor.getString(i);
+        i++;
+        }while(cursor.moveToNext());
+
+        return results;
+
     }
 
 
