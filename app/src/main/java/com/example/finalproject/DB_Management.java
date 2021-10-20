@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
-import android.text.BoringLayout;
+
 
 public class DB_Management extends SQLiteOpenHelper {
 
@@ -140,7 +140,7 @@ public class DB_Management extends SQLiteOpenHelper {
                 return 3;
             }
         }
-
+        cursor.close();
         return 0;
 
 
@@ -157,8 +157,10 @@ public class DB_Management extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
+            cursor.close();
             return true;
         }else{
+            cursor.close();
             return false;
         }
     }
@@ -175,8 +177,10 @@ public class DB_Management extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
+            cursor.close();
             return true;
         }else{
+            cursor.close();
             return false;
         }
     }
@@ -189,7 +193,7 @@ public class DB_Management extends SQLiteOpenHelper {
     public Boolean deleteMemberRole(String username){
         return deleteRole(username, 3);
     }
-    
+
     /** Method deletes a users Instructor role from the role table. Helper method.
      *
      * @param username whos Instructor role is to be deleted.
@@ -203,8 +207,10 @@ public class DB_Management extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery("select * from users where username = ?",new String[] {username});
         if(cursor.getCount()>0) {
+            cursor.close();
             return true;
         } else {
+            cursor.close();
             return false;
         }
 
@@ -214,8 +220,10 @@ public class DB_Management extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery("select * from users where username = ? and password = ?",new String[] {username,password});
         if(cursor.getCount()>0) {
+            cursor.close();
             return true;
         } else {
+            cursor.close();
             return false;
         }
     }
@@ -236,8 +244,10 @@ public class DB_Management extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
+            cursor.close();
             return true;
         }else{
+            cursor.close();
             return false;
         }
     }
@@ -253,8 +263,36 @@ public class DB_Management extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
+            cursor.close();
             return true;
         }else{
+            cursor.close();
+            return false;
+        }
+    }
+
+    /**
+     * Method updates a class, all fields except class_id can be updated.
+     * @param class_id the class to be updated.
+     * @param type
+     * @param difficulty
+     * @param start_time
+     * @param end_time
+     * @param capacity
+     * @param instructor
+     * @return returns true if success, false otherwise.
+     */
+    public Boolean updateClass(int class_id, String type, String difficulty, int start_time, int end_time, int capacity, int instructor){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        String query = "UPDATE classes" +
+                " SET type = " + type + ", difficulty = " + difficulty + ", start_time = " + start_time + ", end_time = " + end_time + ", capacity = " + capacity + ", instructor = " + instructor +
+                " WHERE class_id = " + class_id;
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            cursor.close();
+            return true;
+        }else{
+            cursor.close();
             return false;
         }
     }
