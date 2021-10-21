@@ -333,7 +333,7 @@ public class DB_Management extends SQLiteOpenHelper {
         int i = 0;
         if (cursor.moveToFirst()) {
             do {
-                results[i] = cursor.getString(i);
+                results[i] = cursor.getString(0);
                 i++;
             } while (cursor.moveToNext());
         }
