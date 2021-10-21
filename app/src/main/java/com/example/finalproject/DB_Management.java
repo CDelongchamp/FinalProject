@@ -280,6 +280,47 @@ public class DB_Management extends SQLiteOpenHelper {
         }
     }
 
+    public Boolean createClassType(String class_type, String description){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+
+        ContentValues insertValues = new ContentValues();
+        insertValues.put("class_type",class_type);
+        insertValues.put("description",description);
+        long insertionStatus = db.insert("class_types", null, insertValues);
+
+        if(insertionStatus > 0  ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Boolean deleteClassType(String class_type){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        int rowsDeleted = myDB.delete("class_types", "class_type ='" + class_type + "'", null);
+
+        if(rowsDeleted > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public Boolean editClassType(String class_type, String description){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("class_type",class_type); 
+        cv.put("description",description);
+
+        int rowsUpdated = myDB.update("class_types", cv, "class_type =" + class_type, null);
+
+        if(rowsUpdated>0){
+            return true;
+        }else
+            return false;
+
+    }
+
     /**
      *
      * @param class_id the class_id from the class table to be deleted.
@@ -349,9 +390,10 @@ public class DB_Management extends SQLiteOpenHelper {
         return results;
     }
 
-
-
-
+    /**
+     * Gets a list of all users in the database.
+     * @return returns a list of strings with usernames of those users. These are the primary keys.
+     */
     public List<String> getAllUsers() {
         List<String> list = new ArrayList<String>();
 
