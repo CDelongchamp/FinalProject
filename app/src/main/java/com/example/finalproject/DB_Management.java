@@ -113,7 +113,7 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public int insertNewUser(String username, String password, boolean is_instructor, boolean is_member) {
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "INSERT INTO users(username,password) VALUES(" + username + ", " + password + ")";
+        String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
 
 
         Cursor cursor = db.rawQuery(query, null);
@@ -123,7 +123,7 @@ public class DB_Management extends SQLiteOpenHelper {
             return 1;
         }
         if(is_instructor) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES(" + username + ", " + 2 + ")"; // XXX hard coded role.
+            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 2 + "')"; // XXX hard coded role.
 
             cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
@@ -133,7 +133,7 @@ public class DB_Management extends SQLiteOpenHelper {
             }
         }
         if(is_member) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES(" + username + ", " + 3 + ")"; // XXX hard coded role.
+            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 3 + "')"; // XXX hard coded role.
 
             cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
