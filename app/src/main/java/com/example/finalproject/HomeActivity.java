@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
 
     Button selectAdmin;
     Button selectMember;
     Button selectInstructor;
+    TextView userTextView;
     DB_Management myDB;
     LoginActivity loginActivity;
 
@@ -28,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         selectInstructor = (Button) findViewById(R.id.selectInstructor);
         selectMember = (Button) findViewById(R.id.selectMember);
 
+        userTextView = (TextView) findViewById(R.id.userTextView);
 
         selectAdmin.setEnabled(false);
         selectInstructor.setEnabled(false);
@@ -35,6 +38,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
         String username = LoginActivity.getUser();
+
+        userTextView.setText(username);
+
         String[] role = myDB.getUserRoles(username);
         for(int i = 0; i < role.length ; i++){
             if(role[i] != null) {
