@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
+            android:name=".RemoveClassTypeActivity"
+            android:exported="true" />
+        <activity
             android:name=".RemoveClassActivity"
             android:exported="true" />
         <activity
