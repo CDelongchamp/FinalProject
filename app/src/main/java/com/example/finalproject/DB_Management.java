@@ -319,7 +319,8 @@ public class DB_Management extends SQLiteOpenHelper {
 
     /**
      * Edits teh class type, should edit both the name and description.
-     * @param class_type the class type to be updated.
+     * @param old_class_type the class type to be updated.
+     * @param new_class_type the new class type.
      * @param description the description to be updated.
      * @return returns true if successful.
      */
