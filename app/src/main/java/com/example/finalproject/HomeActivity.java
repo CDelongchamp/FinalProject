@@ -12,15 +12,45 @@ public class HomeActivity extends AppCompatActivity {
     Button selectAdmin;
     Button selectMember;
     Button selectInstructor;
+    DB_Management myDB;
+    LoginActivity loginActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        myDB = new DB_Management(this );
+
+
+
         selectAdmin = (Button) findViewById(R.id.selectAdmin);
-        selectMember = (Button) findViewById(R.id.selectMember);
         selectInstructor = (Button) findViewById(R.id.selectInstructor);
+        selectMember = (Button) findViewById(R.id.selectMember);
+
+
+        selectAdmin.setEnabled(false);
+        selectInstructor.setEnabled(false);
+        selectMember.setEnabled(false);
+
+
+        String username = LoginActivity.getUser();
+        String[] role = myDB.getUserRoles(username);
+        for(int i = 0; i < role.length ; i++){
+            if(role[i] != null) {
+                if (role[i].contains("1")) {
+                    selectAdmin.setEnabled(true);
+                }
+                if (role[i].contains("2")) {
+                    selectInstructor.setEnabled(true);
+                }
+                if (role[i].contains("3")) {
+                    selectMember.setEnabled(true);
+                }
+            }
+        }
+
+
 
         selectMember.setOnClickListener(new View.OnClickListener() {
             @Override
