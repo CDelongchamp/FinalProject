@@ -109,9 +109,12 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param password The password of the user.
      * @param is_instructor A boolean if the user wants to be an instructor
      * @param is_member A boolean if the user wants to be a member.
-     * @return Returns 0 if successful, 1 if the user exists, 2 if there was an error adding the instructor role, 3 if there was an error adding the member role.
+     * @return Returns 0 if successful, 1 if the user exists, 2 if there was an error adding the instructor role, 3 if there was an error adding the member role, 4 if neither role was selected.
      */
     public int insertNewUser(String username, String password, boolean is_instructor, boolean is_member) {
+        if(!is_instructor && !is_member)
+            return 4;
+
         SQLiteDatabase myDB = this.getWritableDatabase();
         String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
 
@@ -122,6 +125,9 @@ public class DB_Management extends SQLiteOpenHelper {
         }else{
             return 1;
         }
+
+
+
         if(is_instructor) {
             query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 2 + "')"; // XXX hard coded role.
 
