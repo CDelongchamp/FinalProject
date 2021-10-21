@@ -8,6 +8,7 @@
 
     <Spinner
         android:id="@+id/userSpinner"
+
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
@@ -16,6 +17,8 @@
         android:background="#95BB86FC"
         android:singleLine="true"
         android:spinnerMode="dialog"
+
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +38,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+
         android:layout_marginTop="150dp"
+
         android:layout_marginEnd="24dp"
         android:text="Instructor"
         app:layout_constraintEnd_toEndOf="parent"
