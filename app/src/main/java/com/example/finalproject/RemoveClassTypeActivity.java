@@ -4,31 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import java.util.List;
-
-public class RemoveClassActivity extends AppCompatActivity {
+public class RemoveClassTypeActivity extends AppCompatActivity {
 
     Button backButton;
-    Button classDeleteButton;
-    Spinner classDeleteSpinner;
+    Button classTypeDeleteButton;
+    Spinner classTypeDeleteSpinner;
     DB_Management myDB;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_remove_class);
+        setContentView(R.layout.activity_remove_class_type);
 
         backButton = findViewById(R.id.backButton);
-        classDeleteButton = findViewById(R.id.classDeleteButton);
-        classDeleteSpinner = findViewById(R.id.classDeleteSpinner);
+        classTypeDeleteButton = findViewById(R.id.classTypeDeleteButton);
+        classTypeDeleteSpinner = findViewById(R.id.classDeleteSpinner);
 
+        loadSpinnerData();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,12 +32,16 @@ public class RemoveClassActivity extends AppCompatActivity {
             }
         });
 
-        classDeleteButton.setOnClickListener(new View.OnClickListener() {
+        classTypeDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
+    }
+
+    private void loadSpinnerData() {
+
     }
 
 }
