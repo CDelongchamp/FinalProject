@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -69,7 +70,6 @@ public class EditClassActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //do nothing
             }
         });
 
@@ -77,6 +77,21 @@ public class EditClassActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = newName.getText().toString();
                 String description = newDescription.getText().toString();
+
+                if ((name.length() == 0) && (description.length() == 0)) {
+                    Toast.makeText(EditClassActivity.this, "Please enter a name and a description.", Toast.LENGTH_SHORT).show();
+                    newName.setHintTextColor(Color.RED);
+                    newDescription.setHintTextColor(Color.RED);
+                    return;
+                } else if (description.length() == 0) {
+                    Toast.makeText(EditClassActivity.this, "Please enter a description.", Toast.LENGTH_SHORT).show();
+                    newDescription.setHintTextColor(Color.RED);
+                    return;
+                } else if (name.length() == 0) {
+                    Toast.makeText(EditClassActivity.this, "Please enter a name.", Toast.LENGTH_SHORT).show();
+                    newName.setHintTextColor(Color.RED);
+                    return;
+                }
 
                 String oldClassType = spinner.getSelectedItem().toString();
 
