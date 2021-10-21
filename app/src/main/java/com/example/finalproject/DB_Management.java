@@ -319,8 +319,8 @@ public class DB_Management extends SQLiteOpenHelper {
 
     /**
      * Edits teh class type, should edit both the name and description.
-     * @param old_class_type the class type to be updated.
-     * @param new_class_type the new class type.
+     * @param old_class_type the class type to be changed.
+     * @param new_class_type the class type to be updated.
      * @param description the description to be updated.
      * @return returns true if successful.
      */
@@ -446,6 +446,25 @@ public class DB_Management extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+    public List<String> getAllClassDescriptions() {
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM class_types";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(1));
             } while (cursor.moveToNext());
         }
         cursor.close();

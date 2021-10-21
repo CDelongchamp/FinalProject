@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -41,6 +42,7 @@ public class RemoveUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 deleteUser();
+                finish();
             }
         });
 
@@ -65,7 +67,7 @@ public class RemoveUserActivity extends AppCompatActivity {
     private void loadSpinnerData() {
         myDB = new DB_Management(this );
         List<String> labels = myDB.getAllUsers();
-
+        labels.add(0,"");
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
 
