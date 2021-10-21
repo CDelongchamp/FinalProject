@@ -451,4 +451,23 @@ public class DB_Management extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
+
+    public List<String> getAllClassDescriptions() {
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM class_types";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
 }

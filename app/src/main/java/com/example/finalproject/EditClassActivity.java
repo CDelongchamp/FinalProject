@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.w3c.dom.Text;
 
@@ -36,12 +39,45 @@ public class EditClassActivity extends AppCompatActivity {
 
         loadSpinnerData();
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                String selectedItemName = "";
+                int index = 0;
+                List<String> allClassTypes = myDB.getAllClassTypes();
+
+                if (spinner.getSelectedItem().toString().length() == 0) {
+                    newName.setText("");
+                    newDescription.setText("");
+                    return;
+                }
+
+                for (String classType : allClassTypes) {
+                    if (classType.contains(spinner.getSelectedItem().toString())) {
+                        selectedItemName = classType;
+                        break;
+                    }
+                    index++;
+                }
+
+                List<String> allClassDescriptions = myDB.getAllClassDescriptions();
+
+                newName.setText(selectedItemName);
+                newDescription.setText(allClassDescriptions.get(index));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //do nothing
+            }
+        });
+
         addChangesButton.setOnClickListener(new View.OnClickListener() {
-
-            String name = newName.getText().toString();
-            String description = newDescription.getText().toString();
-
             public void onClick(View v) {
+                String name = newName.getText().toString();
+                String description = newDescription.getText().toString();
+
                 String oldClassType = spinner.getSelectedItem().toString();
 
                 Boolean editClassType = myDB.editClassType(oldClassType,name,description);
@@ -66,7 +102,7 @@ public class EditClassActivity extends AppCompatActivity {
 
     private void loadSpinnerData() {
         List<String> labels = myDB.getAllClassTypes();
-
+        labels.add(0,"");
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
 
