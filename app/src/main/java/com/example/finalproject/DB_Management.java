@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -310,6 +311,7 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param username the user we are checking for roles.
      * @return a array of strings that contain the results.
      */
+    @SuppressLint("Range")
     public String[] getUserRoles(String username){
         String[] results = new String[3];
         SQLiteDatabase myDB = this.getReadableDatabase();
@@ -324,8 +326,8 @@ public class DB_Management extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return results;
 
+        return results;
     }
 
 
