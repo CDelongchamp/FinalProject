@@ -324,11 +324,13 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param description the description to be updated.
      * @return returns true if successful.
      */
+
     public Boolean editClassType(String old_class_type, String new_class_type, String description){
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("class_type", new_class_type);
         cv.put("description", description);
+
 
         int rowsUpdated = myDB.update("class_types", cv, "class_type =" + old_class_type, null);
 
