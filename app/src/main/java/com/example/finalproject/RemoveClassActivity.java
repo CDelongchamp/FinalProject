@@ -26,8 +26,9 @@ public class RemoveClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_remove_class);
 
         backButton = findViewById(R.id.backButton);
-        classDeleteButton = findViewById(R.id.btn_delete);
+        classDeleteButton = findViewById(R.id.classDeleteButton);
         classDeleteSpinner = findViewById(R.id.classDeleteSpinner);
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +40,7 @@ public class RemoveClassActivity extends AppCompatActivity {
         classDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
     }
