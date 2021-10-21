@@ -18,6 +18,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        selectAdmin = (Button) findViewById(R.id.selectAdmin);
+        selectMember = (Button) findViewById(R.id.selectMember);
+        selectInstructor = (Button) findViewById(R.id.selectInstructor);
 
         selectMember.setOnClickListener(new View.OnClickListener() {
             @Override
