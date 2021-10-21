@@ -19,9 +19,10 @@ import java.util.List;
 public class EditUserActivity extends AppCompatActivity {
 
     Button backButton;
+    Button btn_saveChanges;
     CheckBox isMemberBox;
     CheckBox isInstructorBox;
-    TextView usernameTextBox;
+
     Spinner spinner;
     DB_Management myDB;
     String username;
@@ -32,9 +33,10 @@ public class EditUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
 
         backButton = findViewById(R.id.backButton2);
+        btn_saveChanges = findViewById(R.id.btn_saveChanges);
         isMemberBox = findViewById(R.id.isMemberBox);
         isInstructorBox = findViewById(R.id.isInstructorBox);
-        usernameTextBox = findViewById(R.id.usernameTextBox);
+
         spinner = findViewById(R.id.userSpinner);
 
         loadSpinnerData();
@@ -43,6 +45,20 @@ public class EditUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btn_saveChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myDB.editUserRoles(username, isInstructorBox.isChecked(), isMemberBox.isChecked())){
+                    Toast.makeText(EditUserActivity.this, username + " was edited succesfully.", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(EditUserActivity.this, username + " was not updated.", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
@@ -55,23 +71,23 @@ public class EditUserActivity extends AppCompatActivity {
                         Object item = parent.getItemAtPosition(pos);
 
                         username = item.toString();
-                        usernameTextBox.setText(username);
 
                         String[] roles = myDB.getUserRoles(username);
+
+                        isInstructorBox.setChecked(false);
+                        isMemberBox.setChecked(false);
 
                         for(int i = 0;i<roles.length; i++){
                             if(roles[i] != null) {
                                 if (roles[i].contains("2")) {
-                                    isInstructorBox.setSelected(true);
+                                    isInstructorBox.setChecked(true);
                                 }
+
                                 if (roles[i].contains("3")) {
-                                    isMemberBox.setSelected(true);
+                                    isMemberBox.setChecked(true);
                                 }
                             }
                         }
-
-
-
 
                     }
                     public void onNothingSelected(AdapterView<?> parent) {
