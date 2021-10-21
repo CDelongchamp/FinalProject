@@ -117,39 +117,51 @@ public class DB_Management extends SQLiteOpenHelper {
             return 4;
 
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
+        //String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
+        String query = "";
+
+        ContentValues insertValues = new ContentValues();
+        insertValues.put("username",username);
+        insertValues.put("password",password);
+        long users = db.insert("users", null, insertValues);
 
 
-        Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()){
+        //Cursor cursor = db.rawQuery(query, null);
+        //if(cursor.moveToFirst()){
+        if(users > 0){
             // Good, no return.
         }else{
             return 1;
+            // Good, no return.
         }
 
 
 
         if(is_instructor) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 2 + "')"; // XXX hard coded role.
+            insertValues = new ContentValues();
+            insertValues.put("user_id",username);
+            insertValues.put("role_id",2 +"");
+            long result = db.insert("roles", null, insertValues);
 
-            cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
+            if (result > 0) {
                 // Good, no return.
             } else {
                 return 2;
             }
         }
         if(is_member) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 3 + "')"; // XXX hard coded role.
+            insertValues = new ContentValues();
+            insertValues.put("user_id",username);
+            insertValues.put("role_id",3+"");
+            long result = db.insert("roles", null, insertValues);
 
-            cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
+            if (result > 0) {
                 // Good, no return.
             } else {
                 return 3;
             }
         }
-        cursor.close();
+
         return 0;
 
 
@@ -315,7 +327,7 @@ public class DB_Management extends SQLiteOpenHelper {
     public String[] getUserRoles(String username){
         String[] results = new String[3];
         SQLiteDatabase myDB = this.getReadableDatabase();
-        String query = "SELECT * FROM roles WHERE user_id = '" + username + "'";
+        String query = "SELECT role_id FROM roles WHERE user_id = '" + username + "'";
         Cursor cursor = db.rawQuery(query, null);
 
         int i = 0;

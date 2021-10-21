@@ -52,17 +52,38 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     Boolean usercheckResult = myDB.checkUsername(user);
                     if(usercheckResult == false) {
-                        int regResult = myDB.insertNewUser(user,pass,is_member,is_instructor);
-                        if(regResult == true) {
-                            Toast.makeText(SignUpActivity.this, "Profile Successfully made.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(SignUpActivity.this, "Sign Up was not successful.", Toast.LENGTH_SHORT).show();
+
+                        int regResult = myDB.insertNewUser(user,pass,is_instructor,is_member);
+
+                        switch (regResult) {
+
+                            case 0:
+                                Toast.makeText(SignUpActivity.this, "Profile Successfully made.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                startActivity(intent);
+                                break;
+
+                            case 1:
+                                Toast.makeText(SignUpActivity.this, "Username is already Taken.", Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case 2:
+                                Toast.makeText(SignUpActivity.this, "Member Sign Up was not successful.", Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case 3:
+                                Toast.makeText(SignUpActivity.this, "Instructor Sign Up was not successful.", Toast.LENGTH_SHORT).show();
+                                break;
+
+                            case 4:
+                                Toast.makeText(SignUpActivity.this, "Either member or instructor needs to be selected.", Toast.LENGTH_SHORT).show();
+                                break;
+
+
+
+
                         }
 
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "Username is already Taken.", Toast.LENGTH_SHORT).show();
                     }
 
                 }
