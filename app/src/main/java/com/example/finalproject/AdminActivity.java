@@ -13,7 +13,7 @@ public class AdminActivity extends AppCompatActivity {
     Button removeUserButton;
     Button editUserButton;
     Button addClassButton;
-    Button removeClassButton;
+
     Button editClassButton;
     Button removeClassTypeButton;
 
@@ -26,7 +26,9 @@ public class AdminActivity extends AppCompatActivity {
         removeUserButton = findViewById(R.id.removeUserButton);
         editUserButton = findViewById(R.id.editUserButton);
         addClassButton = findViewById(R.id.addClassButton);
-        removeClassButton = findViewById(R.id.removeClassButton);
+
+        addUserButton.setEnabled(false);
+
         editClassButton = findViewById(R.id.editClassButton);
         removeClassTypeButton = findViewById(R.id.removeClassTypeButton);
 
@@ -62,13 +64,6 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-        removeClassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),RemoveClassActivity.class);
-                startActivity(intent);
-            }
-        });
 
         editClassButton.setOnClickListener(new View.OnClickListener() {
             @Override
