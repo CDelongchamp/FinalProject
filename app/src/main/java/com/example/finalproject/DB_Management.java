@@ -120,10 +120,9 @@ public class DB_Management extends SQLiteOpenHelper {
 
 
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()){
-            // Good, no return.
-        }else{
+        if(!cursor.moveToFirst()){
             return 1;
+            // Good, no return.
         }
 
 
