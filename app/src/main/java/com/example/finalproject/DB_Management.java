@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -173,16 +174,22 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return Returns true if successful, false otherwise.
      */
     public Boolean deleteUser(String username){
+
+        if(username.contains("admin")){
+            return false;
+        }
+
         SQLiteDatabase myDB = this.getWritableDatabase();
         String query = "DELETE FROM users WHERE username ='" + username + "'";
 
-        Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()){
-            cursor.close();
-            return true;
+        int users = myDB.delete("users", "username ='" + username + "'", null);
+
+        //Cursor cursor = db.rawQuery(query, null);
+
+        if(checkUsername(username)){
+            return false; // It was found. Did not delete.
         }else{
-            cursor.close();
-            return false;
+            return true;
         }
     }
 
@@ -345,9 +352,22 @@ public class DB_Management extends SQLiteOpenHelper {
 
 
 
+    public List<String> getAllUsers() {
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM users";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);//selectQuery,selectedArguments
 
 
-
-
-
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));//adding 1st column data
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
 }
