@@ -12,6 +12,9 @@ public class AdminActivity extends AppCompatActivity {
     Button addUserButton;
     Button removeUserButton;
     Button editUserButton;
+    Button addClassButton;
+    Button removeClassButton;
+    Button editClassButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,9 @@ public class AdminActivity extends AppCompatActivity {
         addUserButton = findViewById(R.id.addUserButton);
         removeUserButton = findViewById(R.id.removeUserButton);
         editUserButton = findViewById(R.id.editUserButton);
+        addClassButton = findViewById(R.id.addClassButton);
+        removeClassButton = findViewById(R.id.removeClassButton);
+        editClassButton = findViewById(R.id.editClassButton);
 
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +48,30 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),EditUserActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        addClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),AddClassActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        removeClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),RemoveClassActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        editClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),EditClassActivity.class);
                 startActivity(intent);
             }
         });
