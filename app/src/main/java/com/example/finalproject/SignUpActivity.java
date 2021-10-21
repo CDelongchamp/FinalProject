@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Boolean usercheckResult = myDB.checkUsername(user);
                     if(usercheckResult == false) {
 
-                        int regResult = myDB.insertNewUser(user,pass,is_member,is_instructor);
+                        int regResult = myDB.insertNewUser(user,pass,is_instructor,is_member);
 
                         switch (regResult) {
 
@@ -68,11 +68,11 @@ public class SignUpActivity extends AppCompatActivity {
                                 break;
 
                             case 2:
-                                Toast.makeText(SignUpActivity.this, "Sign Up was not successful.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, "Member Sign Up was not successful.", Toast.LENGTH_SHORT).show();
                                 break;
 
                             case 3:
-                                Toast.makeText(SignUpActivity.this, "Sign Up was not successful.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, "Instructor Sign Up was not successful.", Toast.LENGTH_SHORT).show();
                                 break;
 
                             case 4:
