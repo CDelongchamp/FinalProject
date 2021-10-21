@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ import java.util.List;
 public class EditUserActivity extends AppCompatActivity {
 
     Button backButton;
+    CheckBox isMemberBox;
+    CheckBox isInstructorBox;
     TextView usernameTextBox;
     Spinner spinner;
     DB_Management myDB;
@@ -28,6 +32,8 @@ public class EditUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
 
         backButton = findViewById(R.id.backButton2);
+        isMemberBox = findViewById(R.id.isMemberBox);
+        isInstructorBox = findViewById(R.id.isInstructorBox);
         usernameTextBox = findViewById(R.id.usernameTextBox);
         spinner = findViewById(R.id.userSpinner);
 
@@ -40,6 +46,8 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
+
+
         spinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -49,7 +57,19 @@ public class EditUserActivity extends AppCompatActivity {
                         username = item.toString();
                         usernameTextBox.setText(username);
 
-                        myDB.getUserRoles(username);
+                        String[] roles = myDB.getUserRoles(username);
+
+                        for(int i = 0;i<roles.length; i++){
+                            if(roles[i] != null) {
+                                if (roles[i].contains("2")) {
+                                    isInstructorBox.setSelected(true);
+                                }
+                                if (roles[i].contains("3")) {
+                                    isMemberBox.setSelected(true);
+                                }
+                            }
+                        }
+
 
 
 
