@@ -332,7 +332,7 @@ public class DB_Management extends SQLiteOpenHelper {
         cv.put("description", description);
 
 
-        int rowsUpdated = myDB.update("class_types", cv, "class_type =" + old_class_type, null);
+        int rowsUpdated = myDB.update("class_types", cv, "class_type =?", new String[]{old_class_type});
 
         if(rowsUpdated>0){
             return true;
