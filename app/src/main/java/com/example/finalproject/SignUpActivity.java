@@ -35,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
+
                 if(user.equals("") || pass.equals("")) {
                     Toast.makeText(SignUpActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
