@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
+            android:name=".RemoveUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".EditUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AddUserActivity"
+            android:exported="true" />
+        <activity
             android:name=".InstructorActivity"
             android:exported="true" />
         <activity
