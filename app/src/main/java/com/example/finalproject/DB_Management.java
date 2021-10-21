@@ -116,11 +116,21 @@ public class DB_Management extends SQLiteOpenHelper {
             return 4;
 
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
+        //String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
+        String query = "";
+
+        ContentValues insertValues = new ContentValues();
+        insertValues.put("username",username);
+        insertValues.put("password",password);
+        long users = db.insert("users", null, insertValues);
 
 
-        Cursor cursor = db.rawQuery(query, null);
-        if(!cursor.moveToFirst()){
+
+        //Cursor cursor = db.rawQuery(query, null);
+        //if(cursor.moveToFirst()){
+        if(users < 0){
+            // Good, no return.
+        }else{
             return 1;
             // Good, no return.
         }
@@ -130,24 +140,26 @@ public class DB_Management extends SQLiteOpenHelper {
         if(is_instructor) {
             query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 2 + "')"; // XXX hard coded role.
 
-            cursor = db.rawQuery(query, null);
+            Cursor cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
                 // Good, no return.
             } else {
+                cursor.close();
                 return 2;
             }
         }
         if(is_member) {
             query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 3 + "')"; // XXX hard coded role.
 
-            cursor = db.rawQuery(query, null);
+            Cursor cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
                 // Good, no return.
             } else {
+                cursor.close();
                 return 3;
             }
         }
-        cursor.close();
+        //cursor.close();
         return 0;
 
 
