@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,6 +16,10 @@ public class SignUpActivity extends AppCompatActivity {
     Button SignUpButton;
     Button LogInButton;
     DB_Management myDB;
+    CheckBox checkBoxInstructor;
+    CheckBox checkBoxMember;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,10 @@ public class SignUpActivity extends AppCompatActivity {
         SignUpButton = (Button) findViewById(R.id.SignUpButton);
         LogInButton = (Button)findViewById(R.id.LogInButton);
 
+        checkBoxInstructor = (CheckBox) findViewById(R.id.checkBoxInstructor);
+        checkBoxMember = (CheckBox) findViewById(R.id.checkBoxMember);
+
+
         myDB = new DB_Management( this);
 
         SignUpButton.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
+                Boolean is_member = checkBoxMember.isChecked();
+                Boolean is_instructor = checkBoxInstructor.isChecked();
 
 
                 if(user.equals("") || pass.equals("")) {
@@ -41,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } else {
                     Boolean usercheckResult = myDB.checkUsername(user);
                     if(usercheckResult == false) {
-                        Boolean regResult = myDB.insertData(user,pass);
+                        int regResult = myDB.insertNewUser(user,pass,is_member,is_instructor);
                         if(regResult == true) {
                             Toast.makeText(SignUpActivity.this, "Profile Successfully made.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
