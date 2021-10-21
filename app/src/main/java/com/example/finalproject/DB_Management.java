@@ -127,7 +127,7 @@ public class DB_Management extends SQLiteOpenHelper {
 
         //Cursor cursor = db.rawQuery(query, null);
         //if(cursor.moveToFirst()){
-        if(users < 0){
+        if(users > 0){
             // Good, no return.
         }else{
             return 1;
