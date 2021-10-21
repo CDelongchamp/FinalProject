@@ -7,90 +7,54 @@
     tools:context=".AddClassActivity">
 
     <EditText
-        android:id="@+id/classDescription"
-        android:layout_width="392dp"
-        android:layout_height="131dp"
+        android:id="@+id/classTypeEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
-        android:hint="Enter the type of class"
+        android:hint="Enter the name of the new class"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/classCapacity"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/classDescriptionEditText"
+        android:layout_width="392dp"
+        android:layout_height="297dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Enter the capacity"
+        android:layout_marginTop="48dp"
+        android:hint="Enter the description of the new class"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/classStartTime" />
-
-    <EditText
-        android:id="@+id/classDifficulty"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Difficulty add spinner"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/classDescription" />
-
-    <EditText
-        android:id="@+id/classStartTime"
-        android:layout_width="187dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Start time"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/classDifficulty" />
-
-    <EditText
-        android:id="@+id/classEndTime"
-        android:layout_width="187dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:hint="End time"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.961"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/classDifficulty" />
+        app:layout_constraintTop_toBottomOf="@+id/classTypeEditText" />
 
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="Go back"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="643dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNewClassButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/addClassFinalButton"
-        android:layout_width="138dp"
-        android:layout_height="61dp"
-        android:text="Add class"
+        android:id="@+id/addNewClassButton"
+        android:layout_width="176dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="44dp"
+        android:text="Add new class"
         android:textSize="16sp"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="543dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/classDescriptionEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

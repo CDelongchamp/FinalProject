@@ -28,7 +28,7 @@ public class MemberActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.welcomeMessage);
         textView.setText("Welcome " + username + "! You are logged in as "); // + role + "."
 
-        Toast.makeText(MemberActivity.this, role[0], Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MemberActivity.this, role[0], Toast.LENGTH_SHORT).show();
 
     }
 }
