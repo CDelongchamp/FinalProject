@@ -9,6 +9,7 @@ import android.widget.Button;
 public class AddClassActivity extends AppCompatActivity {
 
     Button backButton;
+    Button addClassButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +17,7 @@ public class AddClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_class);
 
         backButton = findViewById(R.id.backButton);
+        addClassButton = findViewById(R.id.addClassFinalButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
