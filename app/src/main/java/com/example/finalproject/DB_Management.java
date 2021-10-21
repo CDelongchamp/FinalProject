@@ -281,6 +281,66 @@ public class DB_Management extends SQLiteOpenHelper {
     }
 
     /**
+     * Method adds a Class Type to the Database
+     * @param class_type the Type of class, like Karate
+     * @param description The description
+     * @return Returns true if it's been added.
+     */
+    public Boolean createClassType(String class_type, String description){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+
+        ContentValues insertValues = new ContentValues();
+        insertValues.put("class_type",class_type);
+        insertValues.put("description",description);
+        long insertionStatus = db.insert("class_types", null, insertValues);
+
+        if(insertionStatus > 0  ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Method deletes the class type.
+     * @param class_type the class type to be deleted.
+     * @return returns true if deleted.
+     */
+    public Boolean deleteClassType(String class_type){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        int rowsDeleted = myDB.delete("class_types", "class_type ='" + class_type + "'", null);
+
+        if(rowsDeleted > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Edits teh class type, should edit both the name and description.
+     * @param class_type the class type to be updated.
+     * @param description the description to be updated.
+     * @return returns true if successful.
+     */
+
+    public Boolean editClassType(String old_class_type, String new_class_type, String description){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("class_type", new_class_type);
+        cv.put("description", description);
+
+
+        int rowsUpdated = myDB.update("class_types", cv, "class_type =" + old_class_type, null);
+
+        if(rowsUpdated>0){
+            return true;
+        }else
+            return false;
+
+    }
+
+    /**
      *
      * @param class_id the class_id from the class table to be deleted.
      * @return returns true if deleted, otherwise returns false.
@@ -349,9 +409,10 @@ public class DB_Management extends SQLiteOpenHelper {
         return results;
     }
 
-
-
-
+    /**
+     * Gets a list of all users in the database.
+     * @return returns a list of strings with usernames of those users. These are the primary keys.
+     */
     public List<String> getAllUsers() {
         List<String> list = new ArrayList<String>();
 
@@ -359,12 +420,31 @@ public class DB_Management extends SQLiteOpenHelper {
         String selectQuery = "SELECT  * FROM users";
 
         SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
 
 
         if (cursor.moveToFirst()) {
             do {
-                list.add(cursor.getString(0));//adding 1st column data
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+    public List<String> getAllClassTypes() {
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM class_types";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
             } while (cursor.moveToNext());
         }
         cursor.close();
