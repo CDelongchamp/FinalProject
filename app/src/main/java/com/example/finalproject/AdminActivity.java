@@ -15,6 +15,7 @@ public class AdminActivity extends AppCompatActivity {
     Button addClassButton;
     Button removeClassButton;
     Button editClassButton;
+    Button removeClassTypeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class AdminActivity extends AppCompatActivity {
         addClassButton = findViewById(R.id.addClassButton);
         removeClassButton = findViewById(R.id.removeClassButton);
         editClassButton = findViewById(R.id.editClassButton);
+        removeClassTypeButton = findViewById(R.id.removeClassTypeButton);
 
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +74,14 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),EditClassActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        removeClassTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),RemoveClassTypeActivity.class);
                 startActivity(intent);
             }
         });
