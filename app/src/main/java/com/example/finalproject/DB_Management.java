@@ -201,7 +201,7 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public Boolean deleteRole(String username, int role_id){
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "DELETE FROM roles WHERE username ='" + username + "' AND role_id = " + role_id;
+        String query = "DELETE FROM roles WHERE user_id ='" + username + "' AND role_id = " + role_id;
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
@@ -339,6 +339,48 @@ public class DB_Management extends SQLiteOpenHelper {
         }else
             return false;
 
+    }
+
+    public Boolean editUserRoles(String username, Boolean isInstructor, Boolean isMember){
+
+        deleteMemberRole(username);
+        deleteInstructorRole(username);
+
+        if(isInstructor)
+            if(!addInstructorRole(username))
+                return false;
+        if(isMember)
+            if(!addMemberRole(username))
+                return false;
+
+        return true;
+
+    }
+
+    public Boolean addMemberRole(String username){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("user_id", username);
+        cv.put("role_id", 3);
+        long rowsUpdated = myDB.insert("roles", null, cv);
+
+        if(rowsUpdated>0){
+            return true;
+        }else
+            return false;
+    }
+    public Boolean addInstructorRole(String username){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("user_id", username);
+        cv.put("role_id", 2);
+        long rowsUpdated = myDB.insert("roles", null, cv);
+
+
+        if(rowsUpdated>0){
+            return true;
+        }else
+            return false;
     }
 
     /**

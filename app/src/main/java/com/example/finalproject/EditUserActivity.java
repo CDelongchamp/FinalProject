@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +19,10 @@ import java.util.List;
 public class EditUserActivity extends AppCompatActivity {
 
     Button backButton;
-    TextView usernameTextBox;
+    Button btn_saveChanges;
+    CheckBox isMemberBox;
+    CheckBox isInstructorBox;
+
     Spinner spinner;
     DB_Management myDB;
     String username;
@@ -28,7 +33,10 @@ public class EditUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user);
 
         backButton = findViewById(R.id.backButton2);
-        usernameTextBox = findViewById(R.id.usernameTextBox);
+        btn_saveChanges = findViewById(R.id.btn_saveChanges);
+        isMemberBox = findViewById(R.id.isMemberBox);
+        isInstructorBox = findViewById(R.id.isInstructorBox);
+
         spinner = findViewById(R.id.userSpinner);
 
         loadSpinnerData();
@@ -40,6 +48,22 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
 
+        btn_saveChanges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myDB.editUserRoles(username, isInstructorBox.isChecked(), isMemberBox.isChecked())){
+                    Toast.makeText(EditUserActivity.this, username + " was edited succesfully.", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(EditUserActivity.this, username + " was not updated.", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+
+
         spinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -47,11 +71,23 @@ public class EditUserActivity extends AppCompatActivity {
                         Object item = parent.getItemAtPosition(pos);
 
                         username = item.toString();
-                        usernameTextBox.setText(username);
 
-                        myDB.getUserRoles(username);
+                        String[] roles = myDB.getUserRoles(username);
 
+                        isInstructorBox.setChecked(false);
+                        isMemberBox.setChecked(false);
 
+                        for(int i = 0;i<roles.length; i++){
+                            if(roles[i] != null) {
+                                if (roles[i].contains("2")) {
+                                    isInstructorBox.setChecked(true);
+                                }
+
+                                if (roles[i].contains("3")) {
+                                    isMemberBox.setChecked(true);
+                                }
+                            }
+                        }
 
                     }
                     public void onNothingSelected(AdapterView<?> parent) {
