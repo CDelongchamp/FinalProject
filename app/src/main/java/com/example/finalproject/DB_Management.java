@@ -127,7 +127,7 @@ public class DB_Management extends SQLiteOpenHelper {
 
         //Cursor cursor = db.rawQuery(query, null);
         //if(cursor.moveToFirst()){
-        if(users < 0){
+        if(users > 0){
             // Good, no return.
         }else{
             return 1;
@@ -137,28 +137,30 @@ public class DB_Management extends SQLiteOpenHelper {
 
 
         if(is_instructor) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 2 + "')"; // XXX hard coded role.
+            insertValues = new ContentValues();
+            insertValues.put("user_id",username);
+            insertValues.put("role_id",2 +"");
+            long result = db.insert("roles", null, insertValues);
 
-            Cursor cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
+            if (result > 0) {
                 // Good, no return.
             } else {
-                cursor.close();
                 return 2;
             }
         }
         if(is_member) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 3 + "')"; // XXX hard coded role.
+            insertValues = new ContentValues();
+            insertValues.put("user_id",username);
+            insertValues.put("role_id",3+"");
+            long result = db.insert("roles", null, insertValues);
 
-            Cursor cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
+            if (result > 0) {
                 // Good, no return.
             } else {
-                cursor.close();
                 return 3;
             }
         }
-        //cursor.close();
+
         return 0;
 
 
@@ -323,7 +325,7 @@ public class DB_Management extends SQLiteOpenHelper {
     public String[] getUserRoles(String username){
         String[] results = new String[3];
         SQLiteDatabase myDB = this.getReadableDatabase();
-        String query = "SELECT * FROM roles WHERE user_id = '" + username + "'";
+        String query = "SELECT role_id FROM roles WHERE user_id = '" + username + "'";
         Cursor cursor = db.rawQuery(query, null);
 
         int i = 0;
