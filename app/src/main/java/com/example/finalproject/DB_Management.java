@@ -125,7 +125,6 @@ public class DB_Management extends SQLiteOpenHelper {
         long users = db.insert("users", null, insertValues);
 
 
-
         //Cursor cursor = db.rawQuery(query, null);
         //if(cursor.moveToFirst()){
         if(users < 0){
