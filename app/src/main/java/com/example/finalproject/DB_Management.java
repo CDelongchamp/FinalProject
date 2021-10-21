@@ -109,11 +109,14 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param password The password of the user.
      * @param is_instructor A boolean if the user wants to be an instructor
      * @param is_member A boolean if the user wants to be a member.
-     * @return Returns 0 if successful, 1 if the user exists, 2 if there was an error adding the instructor role, 3 if there was an error adding the member role.
+     * @return Returns 0 if successful, 1 if the user exists, 2 if there was an error adding the instructor role, 3 if there was an error adding the member role, 4 if neither role was selected.
      */
     public int insertNewUser(String username, String password, boolean is_instructor, boolean is_member) {
+        if(!is_instructor && !is_member)
+            return 4;
+
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "INSERT INTO users(username,password) VALUES(" + username + ", " + password + ")";
+        String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
 
 
         Cursor cursor = db.rawQuery(query, null);
@@ -122,8 +125,11 @@ public class DB_Management extends SQLiteOpenHelper {
         }else{
             return 1;
         }
+
+
+
         if(is_instructor) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES(" + username + ", " + 2 + ")"; // XXX hard coded role.
+            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 2 + "')"; // XXX hard coded role.
 
             cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
@@ -133,7 +139,7 @@ public class DB_Management extends SQLiteOpenHelper {
             }
         }
         if(is_member) {
-            query = "INSERT INTO roles(user_id, role_id) VALUES(" + username + ", " + 3 + ")"; // XXX hard coded role.
+            query = "INSERT INTO roles(user_id, role_id) VALUES('" + username + "', '" + 3 + "')"; // XXX hard coded role.
 
             cursor = db.rawQuery(query, null);
             if (cursor.moveToFirst()) {
@@ -155,7 +161,7 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public Boolean deleteUser(String username){
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "DELETE FROM users WHERE username =" + username;
+        String query = "DELETE FROM users WHERE username ='" + username + "'";
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
@@ -175,7 +181,7 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public Boolean deleteRole(String username, int role_id){
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "DELETE FROM roles WHERE username =" + username + " AND role_id = " + role_id;
+        String query = "DELETE FROM roles WHERE username ='" + username + "' AND role_id = " + role_id;
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
@@ -306,15 +312,18 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public String[] getUserRoles(String username){
         String[] results = new String[3];
-        SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "SELECT * FROM roles WHERE user_id = \"" + username + "\"";
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        String query = "SELECT * FROM roles WHERE user_id = '" + username + "'";
         Cursor cursor = db.rawQuery(query, null);
 
         int i = 0;
-        do{ cursor.getString(i);
-        i++;
-        }while(cursor.moveToNext());
-
+        if (cursor.moveToFirst()) {
+            do {
+                results[i] = cursor.getString(i);
+                i++;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
         return results;
 
     }

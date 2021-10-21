@@ -35,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
+
                 if(user.equals("") || pass.equals("")) {
                     Toast.makeText(SignUpActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
@@ -43,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Boolean regResult = myDB.insertData(user,pass);
                         if(regResult == true) {
                             Toast.makeText(SignUpActivity.this, "Profile Successfully made.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                            Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(SignUpActivity.this, "Sign Up was not successful.", Toast.LENGTH_SHORT).show();
@@ -61,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
         LogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
             }
         });
