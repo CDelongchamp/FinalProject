@@ -49,11 +49,12 @@ public class RemoveClassTypeActivity extends AppCompatActivity {
 
         Boolean deleteClassType = myDB.deleteClassType(class_type);
 
-        if(deleteClassType)
+        if(deleteClassType) {
             Toast.makeText(RemoveClassTypeActivity.this, class_type + " was deleted succesfully.", Toast.LENGTH_SHORT).show();
-        else
+            finish();
+        } else {
             Toast.makeText(RemoveClassTypeActivity.this, class_type + " was not deleted.", Toast.LENGTH_SHORT).show();
-
+        }
     }
 
     private void loadSpinnerData() {

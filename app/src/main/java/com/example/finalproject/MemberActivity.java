@@ -11,9 +11,9 @@ import android.widget.Toast;
 public class MemberActivity extends AppCompatActivity {
 
     DB_Management myDB;
-    LoginActivity loginActivity;
     String username;
-    String[] role;
+//    String[] role;
+    String role;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -23,10 +23,16 @@ public class MemberActivity extends AppCompatActivity {
 
         myDB = new DB_Management(this );
         username = LoginActivity.getUser();
-        role = myDB.getUserRoles(username);
+//        role = myDB.getUserRoles(username);
+
+        if (HomeActivity.getRole()) {
+            role = "member";
+        } else {
+            role = "instructor";
+        }
 
         TextView textView = (TextView) findViewById(R.id.welcomeMessage);
-        textView.setText("Welcome " + username + "! You are logged in as "); // + role + "."
+        textView.setText("Welcome " + username + "! You are logged in as " + role + ".");
 
 //        Toast.makeText(MemberActivity.this, role[0], Toast.LENGTH_SHORT).show();
 

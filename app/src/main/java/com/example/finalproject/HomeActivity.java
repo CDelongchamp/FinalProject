@@ -16,6 +16,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView userTextView;
     DB_Management myDB;
     LoginActivity loginActivity;
+    static boolean finalRole = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         myDB = new DB_Management(this );
-
 
 
         selectAdmin = (Button) findViewById(R.id.selectAdmin);
@@ -56,11 +56,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-
-
         selectMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finalRole = true;
                 Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
                 startActivity(intent);
             }
@@ -69,7 +68,9 @@ public class HomeActivity extends AppCompatActivity {
         selectInstructor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),InstructorActivity.class);
+                finalRole = false;
+//                Intent intent = new Intent(getApplicationContext(),InstructorActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
                 startActivity(intent);
             }
         });
@@ -83,6 +84,8 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
+    public static boolean getRole() {
+        return finalRole;
+    }
 
 }

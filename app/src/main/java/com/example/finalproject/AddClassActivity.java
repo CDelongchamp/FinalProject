@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,10 +29,26 @@ public class AddClassActivity extends AppCompatActivity {
         myDB = new DB_Management(this);
 
         addNewClassButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String type = classType.getText().toString();
                 String description = classDescription.getText().toString();
+
+                if ((type.length() == 0) && (description.length() == 0)) {
+                    Toast.makeText(AddClassActivity.this, "Please enter a name and a description.", Toast.LENGTH_SHORT).show();
+                    classType.setHintTextColor(Color.RED);
+                    classDescription.setHintTextColor(Color.RED);
+                    return;
+                } else if (description.length() == 0) {
+                    Toast.makeText(AddClassActivity.this, "Please enter a description.", Toast.LENGTH_SHORT).show();
+                    classDescription.setHintTextColor(Color.RED);
+                    return;
+                } else if (type.length() == 0) {
+                    Toast.makeText(AddClassActivity.this, "Please enter a name.", Toast.LENGTH_SHORT).show();
+                    classType.setHintTextColor(Color.RED);
+                    return;
+                }
 
                 if (myDB.createClassType(type, description)) {
                     Toast.makeText(AddClassActivity.this, "Class type added successfully.", Toast.LENGTH_SHORT).show();
