@@ -307,7 +307,7 @@ public class DB_Management extends SQLiteOpenHelper {
     public String[] getUserRoles(String username){
         String[] results = new String[3];
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "SELECT * FROM roles WHERE user_id = \"" + username + "\"";
+        String query = "SELECT * FROM roles WHERE user_id = \''" + username + "\'";
         Cursor cursor = db.rawQuery(query, null);
 
         int i = 0;
