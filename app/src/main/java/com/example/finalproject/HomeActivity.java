@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         selectInstructor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
+                Intent intent = new Intent(getApplicationContext(),InstructorActivity.class);
                 startActivity(intent);
             }
         });
@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         selectAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
+                Intent intent = new Intent(getApplicationContext(),AdminActivity.class);
                 startActivity(intent);
             }
         });

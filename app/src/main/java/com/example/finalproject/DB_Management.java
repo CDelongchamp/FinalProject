@@ -317,6 +317,7 @@ public class DB_Management extends SQLiteOpenHelper {
                 i++;
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return results;
 
     }

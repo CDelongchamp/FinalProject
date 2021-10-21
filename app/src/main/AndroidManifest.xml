@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
+            android:name=".InstructorActivity"
+            android:exported="true" />
+        <activity
             android:name=".MemberActivity"
             android:exported="true" />
         <activity
