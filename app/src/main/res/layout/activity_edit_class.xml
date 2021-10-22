@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:layout_marginBottom="24dp"
-        android:text="Select the class type you want to delete:"
+        android:text="Select the class type you want to edit:"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/userSpinner"
         app:layout_constraintEnd_toEndOf="parent"
