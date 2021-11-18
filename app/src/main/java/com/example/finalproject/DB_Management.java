@@ -45,7 +45,7 @@ public class DB_Management extends SQLiteOpenHelper {
                 "start_time INTEGER," +
                 "end_time INTEGER," +
                 "capacity INTEGER," +
-                "instructor interger," +
+                "instructor TEXT," +
                 "FOREIGN KEY(type) REFERENCES class_types(class_type)," +
                 "FOREIGN KEY(difficulty) REFERENCES class_difficulties(difficulty_id)," +
                 "FOREIGN KEY(instructor) REFERENCES users(username))");
@@ -264,9 +264,9 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param instructor the username of the user who is instructing this class. This will technically allow a member to be an instructor.
      * @return Returns true if it has been added, false otherwise.
      */
-    public Boolean createClass(String type, String difficulty, int start_time, int end_time, int capacity, int instructor){
+    public Boolean createClass(String type, String difficulty, int start_time, int end_time, int capacity, String instructor){
         SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "INSERT INTO classes (type,difficulty,start_time,end_time,capacity,instructor) VALUES(" + type + ", " + difficulty + ", " + start_time + ", " + end_time +", " + capacity + ", " + instructor + " )";
+        String query = "INSERT INTO classes (type,difficulty,start_time,end_time,capacity,instructor) VALUES(\'" + type + "\', \'" + difficulty + "\', " + start_time + ", " + end_time +", " + capacity + ", \'" + instructor + "\' )";
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
@@ -412,11 +412,11 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param instructor
      * @return returns true if success, false otherwise.
      */
-    public Boolean updateClass(int class_id, String type, String difficulty, int start_time, int end_time, int capacity, int instructor){
+    public Boolean updateClass(int class_id, String type, String difficulty, int start_time, int end_time, int capacity, String instructor){
         SQLiteDatabase myDB = this.getWritableDatabase();
         String query = "UPDATE classes" +
-                " SET type = " + type + ", difficulty = " + difficulty + ", start_time = " + start_time + ", end_time = " + end_time + ", capacity = " + capacity + ", instructor = " + instructor +
-                " WHERE class_id = " + class_id;
+                " SET type = \'" + type + "\', difficulty = \'" + difficulty + "\', start_time = " + start_time + ", end_time = " + end_time + ", capacity = " + capacity + ", instructor = \'" + instructor +
+                "\' WHERE class_id = " + class_id;
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
             cursor.close();
@@ -495,7 +495,29 @@ public class DB_Management extends SQLiteOpenHelper {
 
     public List<String> getAllScheduledClasses(){
 
-        return null;
+        createClass("Yoga", "easy", 5, 5, 4, "admin");
+
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM classes";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                String s = "";
+                for(int i =0; i < 7; i++){
+                    s+= cursor.getString(i);
+                    s+= " ";
+                }
+                list.add(s);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
     }
 
     public List<String> getAllClassesByClassName(String className){
