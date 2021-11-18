@@ -26,14 +26,14 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        username = (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
 
-        SignUpButton = (Button) findViewById(R.id.SignUpButton);
-        LogInButton = (Button)findViewById(R.id.LogInButton);
+        SignUpButton = findViewById(R.id.SignUpButton);
+        LogInButton = findViewById(R.id.LogInButton);
 
-        checkBoxInstructor = (CheckBox) findViewById(R.id.checkBoxInstructor);
-        checkBoxMember = (CheckBox) findViewById(R.id.checkBoxMember);
+        checkBoxInstructor = findViewById(R.id.checkBoxInstructor);
+        checkBoxMember = findViewById(R.id.checkBoxMember);
 
 
         myDB = new DB_Management( this);

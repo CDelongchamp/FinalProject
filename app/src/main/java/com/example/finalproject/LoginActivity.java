@@ -22,10 +22,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        username = (EditText) findViewById(R.id.usernameLogin);
-        password = (EditText) findViewById(R.id.passwordLogin);
-        Login2Button = (Button) findViewById(R.id.btn_login);
-        registerButton = (Button) findViewById(R.id.btn_register);
+        username = findViewById(R.id.usernameLogin);
+        password = findViewById(R.id.passwordLogin);
+        Login2Button = findViewById(R.id.btn_login);
+        registerButton = findViewById(R.id.btn_register);
 
         myDB = new DB_Management(this);
 

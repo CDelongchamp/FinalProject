@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
+            android:name=".InstructorEditClassActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ScheduleClassActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ViewScheduledClassActivity"
+            android:exported="true" />
+        <activity
             android:name=".RemoveClassTypeActivity"
             android:exported="true" />
         <activity
