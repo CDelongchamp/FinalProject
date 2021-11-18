@@ -367,6 +367,7 @@ public class DB_Management extends SQLiteOpenHelper {
         }else
             return false;
     }
+
     public Boolean addInstructorRole(String username){
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -492,6 +493,49 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    public List<String> getAllScheduledClasses(){
+
+        return null;
+    }
+
+    public List<String> getAllClassesByClassName(String className){
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM classes WHERE type = '" + className + "'";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+    public List<String> getAllClassesByInstructorName(String instructorName){
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM classes WHERE instructor = '" + instructorName + "'";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
     public List<String> getAllClassDescriptions() {
         List<String> list = new ArrayList<String>();
 
@@ -510,4 +554,5 @@ public class DB_Management extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
+
 }
