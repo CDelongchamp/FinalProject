@@ -15,7 +15,6 @@ public class HomeActivity extends AppCompatActivity {
     Button selectInstructor;
     TextView userTextView;
     DB_Management myDB;
-    LoginActivity loginActivity;
     static boolean finalRole = true;
 
     @Override
@@ -26,11 +25,11 @@ public class HomeActivity extends AppCompatActivity {
         myDB = new DB_Management(this );
 
 
-        selectAdmin = (Button) findViewById(R.id.selectAdmin);
-        selectInstructor = (Button) findViewById(R.id.selectInstructor);
-        selectMember = (Button) findViewById(R.id.selectMember);
+        selectAdmin = findViewById(R.id.selectAdmin);
+        selectInstructor = findViewById(R.id.selectInstructor);
+        selectMember = findViewById(R.id.selectMember);
 
-        userTextView = (TextView) findViewById(R.id.userTextView);
+        userTextView = findViewById(R.id.userTextView);
 
         selectAdmin.setEnabled(false);
         selectInstructor.setEnabled(false);
@@ -69,8 +68,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finalRole = false;
-//                Intent intent = new Intent(getApplicationContext(),InstructorActivity.class);
-                Intent intent = new Intent(getApplicationContext(),MemberActivity.class);
+                Intent intent = new Intent(getApplicationContext(),InstructorActivity.class);
                 startActivity(intent);
             }
         });
