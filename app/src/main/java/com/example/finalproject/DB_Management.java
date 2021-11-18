@@ -229,6 +229,11 @@ public class DB_Management extends SQLiteOpenHelper {
         return deleteRole(username, 2);
     }
 
+    /**
+     * Method checks if the username is in the database.
+     * @param username the username to be checked.
+     * @return returns true if they found that user.
+     */
     public Boolean checkUsername(String username) {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery("select * from users where username = ?",new String[] {username});
@@ -242,6 +247,12 @@ public class DB_Management extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Checks if the username and password match the database. We are aware that this is horrifically done.
+     * @param username the username to validate
+     * @param password the password to validate
+     * @return returns true if it's a valid login.
+     */
     public Boolean checkusernamePassword(String username, String password) {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery("select * from users where username = ? and password = ?",new String[] {username,password});
@@ -322,7 +333,6 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param description the description to be updated.
      * @return returns true if successful.
      */
-
     public Boolean editClassType(String old_class_type, String new_class_type, String description){
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -339,6 +349,13 @@ public class DB_Management extends SQLiteOpenHelper {
 
     }
 
+    /** Method edits a user's associate roles.
+     *
+     * @param username the username of the user to edit roles.
+     * @param isInstructor Will they have the instructor role?
+     * @param isMember Will they have the member role?
+     * @return returns true if successful.
+     */
     public Boolean editUserRoles(String username, Boolean isInstructor, Boolean isMember){
 
         deleteMemberRole(username);
@@ -355,6 +372,11 @@ public class DB_Management extends SQLiteOpenHelper {
 
     }
 
+    /** Method adds a role to the user
+     *
+     * @param username username of the user to have a role added to.
+     * @return returns true if the user gets a member role added.
+     */
     public Boolean addMemberRole(String username){
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -368,6 +390,11 @@ public class DB_Management extends SQLiteOpenHelper {
             return false;
     }
 
+    /** Method adds the instructor role to the user.
+     *
+     * @param username the username of the user who is to get the instructor role.
+     * @return returns true if successful.
+     */
     public Boolean addInstructorRole(String username){
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -382,7 +409,7 @@ public class DB_Management extends SQLiteOpenHelper {
             return false;
     }
 
-    /**
+    /** Method deletes a class from the class table using the class_id.
      *
      * @param class_id the class_id from the class table to be deleted.
      * @return returns true if deleted, otherwise returns false.
@@ -493,6 +520,10 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /** Method returns a list of schedules classes.
+     *
+     * @return returns a list of space seperated elements of the classes and their info.
+     */
     public List<String> getAllScheduledClasses(){
 
         createClass("Yoga", "easy", 5, 5, 4, "admin");
@@ -520,6 +551,11 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /**
+     *
+     * @param className
+     * @return
+     */
     public List<String> getAllClassesByClassName(String className){
         List<String> list = new ArrayList<String>();
 
@@ -539,6 +575,11 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /**
+     *
+     * @param instructorName
+     * @return
+     */
     public List<String> getAllClassesByInstructorName(String instructorName){
         List<String> list = new ArrayList<String>();
 
@@ -558,6 +599,10 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getAllClassDescriptions() {
         List<String> list = new ArrayList<String>();
 
