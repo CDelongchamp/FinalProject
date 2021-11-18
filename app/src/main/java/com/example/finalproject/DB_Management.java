@@ -503,6 +503,29 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /**
+     * Gets a list of all users in the database.
+     * @return returns a list of strings with usernames of those users. These are the primary keys.
+     */
+    public List<String> getAllInstructors() {
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM users LEFT JOIN roles ON users.username = roles.user_id WHERE role_id = 2";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
     public List<String> getAllClassTypes() {
         List<String> list = new ArrayList<String>();
 
@@ -528,7 +551,7 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public List<String> getAllScheduledClasses(){
 
-        createClass("Yoga", "easy", 5, 5, 4, "admin");
+        createClass("Yoga", "easy", 52345, 234234235, 4, "admin"); //TODO remove
 
         List<String> list = new ArrayList<String>();
 
