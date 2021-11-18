@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
         android:background="@color/DropdownMenu"
         android:spinnerMode="dialog"
@@ -34,20 +34,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fitnessTypeSpinner" />
 
-    <Spinner
-        android:id="@+id/dayOfWeekSpinner"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/DropdownMenu"
-        android:spinnerMode="dialog"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/difficultySpinner" />
-
     <Button
         android:id="@+id/backButton5"
         android:layout_width="wrap_content"
@@ -57,9 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleClassButton"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/scheduleClassButton"
@@ -87,53 +71,10 @@
         android:id="@+id/textView11"
         android:layout_width="121dp"
         android:layout_height="15dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="60dp"
         android:text="Maximum capacity:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startTimeEdit" />
+        tools:layout_editor_absoluteY="393dp" />
 
-    <EditText
-        android:id="@+id/startTimeEdit"
-        android:layout_width="118dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <EditText
-        android:id="@+id/endTimeEdit"
-        android:layout_width="118dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintStart_toEndOf="@+id/startTimeEdit"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="88dp"
-        android:text="start time:"
-        app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dayOfWeekSpinner" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="120dp"
-        android:text="end time:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dayOfWeekSpinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

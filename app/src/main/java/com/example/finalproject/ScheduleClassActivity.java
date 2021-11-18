@@ -17,9 +17,10 @@ import java.util.List;
 public class ScheduleClassActivity extends AppCompatActivity {
 
     Button backButton, scheduleClass;
-    Spinner fitnessTypeSpinner, difficultySpinner, dayOfWeekSpinner;
-    EditText startTimeEdit, endTimeEdit, maximumCapacityNumber;
+    Spinner fitnessTypeSpinner, difficultySpinner;
+    EditText maximumCapacityNumber;
     DB_Management myDB;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,11 @@ public class ScheduleClassActivity extends AppCompatActivity {
         scheduleClass = findViewById(R.id.scheduleClassButton);
         fitnessTypeSpinner = findViewById(R.id.fitnessTypeSpinner);
         difficultySpinner = findViewById(R.id.difficultySpinner);
-        dayOfWeekSpinner = findViewById(R.id.dayOfWeekSpinner);
-        startTimeEdit = findViewById(R.id.startTimeEdit);
-        endTimeEdit = findViewById(R.id.endTimeEdit);
         maximumCapacityNumber = findViewById(R.id.maximumCapacityNumber);
+        username = LoginActivity.getUser();
 
         loadFitnessSpinnerData();
         loadDifficultySpinnerData();
-        loadDayOfWeekSpinnerData();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,40 +53,25 @@ public class ScheduleClassActivity extends AppCompatActivity {
 
                 fitnessType = fitnessTypeSpinner.getSelectedItem().toString();
                 difficulty = difficultySpinner.getSelectedItem().toString();
-                dayOfWeek = dayOfWeekSpinner.getSelectedItem().toString();
-                startTime = Integer.getInteger(startTimeEdit.getText().toString());
-                endTime = Integer.getInteger(endTimeEdit.getText().toString());
                 maximumCapacity = Integer.getInteger(maximumCapacityNumber.getText().toString());
 
-
+                boolean isCreated = myDB.createClass(fitnessType,difficulty,0,0,maximumCapacity,username);
                 // incorrect field entry cases
+                if (!isCreated) {
 
-                boolean isIncorrect = false;
-                if (fitnessType.length() == 0) {
-                    fitnessTypeSpinner.setBackgroundColor(Color.RED);
-                    isIncorrect = true;
-                }
-                if (difficulty.length() == 0) {
-                    difficultySpinner.setBackgroundColor(Color.RED);
-                    isIncorrect = true;
-                }
-                if (dayOfWeek.length() == 0) {
-                    dayOfWeekSpinner.setBackgroundColor(Color.RED);
-                    isIncorrect = true;
-                }
-                if (startTime == 0) {
-                    startTimeEdit.setHintTextColor(Color.RED);
-                }
-                if (endTime == 0) {
-                    endTimeEdit.setHintTextColor(Color.RED);
-                }
-                if (maximumCapacity == 0) {
-                    maximumCapacityNumber.setHintTextColor(Color.RED);
-                }
-                if (isIncorrect) {
+                    if (fitnessType.length() == 0) {
+                        fitnessTypeSpinner.setBackgroundColor(Color.RED);
+                    }
+                    if (difficulty.length() == 0) {
+                        difficultySpinner.setBackgroundColor(Color.RED);
+                    }
+                    if (maximumCapacity == 0) {
+                        maximumCapacityNumber.setHintTextColor(Color.RED);
+                    }
                     Toast.makeText(ScheduleClassActivity.this, "Please fill in the fields above correctly.", Toast.LENGTH_SHORT).show();
+                } else {
+                    finish();
                 }
-
             }
         });
     }
@@ -112,32 +95,12 @@ public class ScheduleClassActivity extends AppCompatActivity {
         labels.add("Intermediate");
         labels.add("Advanced");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
         difficultySpinner.setAdapter(dataAdapter);
-
-    }
-    private void loadDayOfWeekSpinnerData() {
-        List<String> labels = new ArrayList<>();
-        labels.add("Sunday");
-        labels.add("Monday");
-        labels.add("Tuesday");
-        labels.add("Wednesday");
-        labels.add("Thursday");
-        labels.add("Friday");
-        labels.add("Saturday");
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        dayOfWeekSpinner.setAdapter(dataAdapter);
-
     }
 }
