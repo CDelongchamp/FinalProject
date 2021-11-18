@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -536,13 +538,30 @@ public class DB_Management extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery(selectQuery, null);
 
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd hh:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+
+        Date d = null;
 
         if (cursor.moveToFirst()) {
             do {
                 String s = "";
-                for(int i =0; i < 7; i++){
-                    s+= cursor.getString(i);
-                    s+= " ";
+                for(int i =1; i < 7; i++){
+                    if(i == 3){
+                        Date date = new Date(cursor.getInt(i));
+                        s += dateFormat.format(date);
+                        s += " ";
+                        s += timeFormat.format(date);
+                    }else if(i == 4) {
+                        s += "-";
+                        Date date = new Date(cursor.getInt(i));
+                        s += timeFormat.format(date);
+                        s += " ";
+                    }else {
+                        s += cursor.getString(i);
+                        s+= " ";
+                    }
                 }
                 list.add(s);
             } while (cursor.moveToNext());
