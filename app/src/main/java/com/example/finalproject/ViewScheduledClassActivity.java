@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,11 +21,19 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
     Button backButton;
     DB_Management myDB;
     MyRecyclerViewAdapter adapter;
+    Spinner classTypeSpinner, instructorSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_scheduled_class);
+
+        backButton = findViewById(R.id.backButton4);
+        classTypeSpinner = findViewById(R.id.classNameSpinner);
+        instructorSpinner = findViewById(R.id.instructorNameSpinner);
+
+        loadClassTypeSpinnerData();
+        loadInstructorSpinnerData();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,11 +103,36 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
             }
         }
 
+    }
 
+    private void loadClassTypeSpinnerData() {
+        myDB = new DB_Management(this );
+        List<String> labels = myDB.getAllClassTypes();
+        labels.add(0,"Class Type");
 
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
 
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        // attaching data adapter to spinner
+        classTypeSpinner.setAdapter(dataAdapter);
+    }
 
+    private void loadInstructorSpinnerData() {
+        myDB = new DB_Management(this );
+        List<String> labels = myDB.getAllInstructors();
+        labels.add(0,"Instructors");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        instructorSpinner.setAdapter(dataAdapter);
     }
 
 }
