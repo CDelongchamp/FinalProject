@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
+            android:name=".InstructorDeleteClassActivity"
+            android:exported="true" />
+        <activity
             android:name=".InstructorEditClassActivity"
             android:exported="true" />
         <activity
