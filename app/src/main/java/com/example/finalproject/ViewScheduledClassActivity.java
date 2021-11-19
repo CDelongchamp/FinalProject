@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import java.util.List;
 
 public class ViewScheduledClassActivity extends AppCompatActivity {
@@ -188,6 +187,5 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
         // attaching data adapter to spinner
         instructorSpinner.setAdapter(dataAdapter);
     }
-
 
 }
