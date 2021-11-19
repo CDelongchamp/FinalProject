@@ -49,10 +49,10 @@
         android:id="@+id/scheduleClassButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:text="Schedule class"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.424"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maximumCapacityNumber" />
 
@@ -69,12 +69,46 @@
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="121dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="60dp"
+        android:layout_width="134dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
         android:text="Maximum capacity:"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="393dp" />
+        app:layout_constraintTop_toBottomOf="@+id/selectStartTimeEdit" />
+
+    <EditText
+        android:id="@+id/selectStartTimeEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="48dp"
+        android:hint="Enter start time"
+        android:text=""
+        app:layout_constraintEnd_toStartOf="@+id/selectEndTimeEdit"
+        app:layout_constraintTop_toBottomOf="@+id/selectDateEdit" />
+
+    <EditText
+        android:id="@+id/selectEndTimeEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="64dp"
+        android:hint="Enter end time"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectDateEdit" />
+
+    <EditText
+        android:id="@+id/selectDateEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="248dp"
+        android:hint="Enter the date"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/difficultySpinner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -275,18 +275,29 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param instructor the username of the user who is instructing this class. This will technically allow a member to be an instructor.
      * @return Returns true if it has been added, false otherwise.
      */
-    public Boolean createClass(String type, String difficulty, int start_time, int end_time, int capacity, String instructor){
-        SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "INSERT INTO classes (type,difficulty,start_time,end_time,capacity,instructor) VALUES(\'" + type + "\', \'" + difficulty + "\', " + start_time + ", " + end_time +", " + capacity + ", \'" + instructor + "\' )";
+    public Boolean createClass(String type, String difficulty, long start_time, long end_time, int capacity, String instructor){
+//        SQLiteDatabase myDB = this.getWritableDatabase();
+//        String query = "INSERT INTO classes (type,difficulty,start_time,end_time,capacity,instructor) VALUES(\'" + type + "\', \'" + difficulty + "\', " + start_time + ", " + end_time +", " + capacity + ", \'" + instructor + "\' )";
+//
+//        Cursor cursor = db.rawQuery(query, null);
+//        if(cursor.getCount() > 0){ // if count > 0 class was successfully created.
+//            cursor.close();
+//            return true;
+//        }else{
+//            cursor.close();
+//            return false;
+//        }
 
-        Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()){
-            cursor.close();
-            return true;
-        }else{
-            cursor.close();
-            return false;
-        }
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("type", type);
+        contentValues.put("difficulty", difficulty);
+        contentValues.put("start_time", start_time);
+        contentValues.put("end_time", end_time);
+        contentValues.put("capacity", capacity);
+        contentValues.put("instructor", instructor);
+
+        long rowID = db.insert("classes", null, contentValues);
+        return (rowID != -1);
     }
 
     /**
@@ -439,7 +450,7 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param instructor
      * @return returns true if success, false otherwise.
      */
-    public Boolean updateClass(int class_id, String type, String difficulty, int start_time, int end_time, int capacity, String instructor){
+    public Boolean updateClass(int class_id, String type, String difficulty, long start_time, long end_time, int capacity, String instructor){
         SQLiteDatabase myDB = this.getWritableDatabase();
         String query = "UPDATE classes" +
                 " SET type = \'" + type + "\', difficulty = \'" + difficulty + "\', start_time = " + start_time + ", end_time = " + end_time + ", capacity = " + capacity + ", instructor = \'" + instructor +
