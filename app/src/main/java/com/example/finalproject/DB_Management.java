@@ -432,13 +432,7 @@ public class DB_Management extends SQLiteOpenHelper {
         String query = "DELETE FROM classes WHERE class_id =" + class_id;
 
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToFirst()){
-            cursor.close();
-            return true;
-        }else{
-            cursor.close();
-            return false;
-        }
+        return cursor.getCount() <= 0;
     }
 
     /**
@@ -572,9 +566,9 @@ public class DB_Management extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery(selectQuery, null);
 
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd hh:mm");
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         Date d = null;
 
@@ -618,10 +612,30 @@ public class DB_Management extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery(selectQuery, null);
 
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         if (cursor.moveToFirst()) {
             do {
-                list.add(cursor.getString(0));
+                String s = "";
+                for(int i =1; i < 7; i++){
+                    if(i == 3){
+                        Date date = new Date(cursor.getInt(i));
+                        s += dateFormat.format(date);
+                        s += " ";
+                        s += timeFormat.format(date);
+                    }else if(i == 4) {
+                        s += "-";
+                        Date date = new Date(cursor.getInt(i));
+                        s += timeFormat.format(date);
+                        s += " ";
+                    }else {
+                        s += cursor.getString(i);
+                        s+= " ";
+                    }
+                }
+                list.add(s);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -642,10 +656,30 @@ public class DB_Management extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery(selectQuery, null);
 
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         if (cursor.moveToFirst()) {
             do {
-                list.add(cursor.getString(0));
+                String s = "";
+                for(int i =0; i < 7; i++){
+                    if(i == 3){
+                        Date date = new Date(cursor.getInt(i));
+                        s += dateFormat.format(date);
+                        s += " ";
+                        s += timeFormat.format(date);
+                    }else if(i == 4) {
+                        s += "-";
+                        Date date = new Date(cursor.getInt(i));
+                        s += timeFormat.format(date);
+                        s += " ";
+                    }else {
+                        s += cursor.getString(i);
+                        s+= " ";
+                    }
+                }
+                list.add(s);
             } while (cursor.moveToNext());
         }
         cursor.close();

@@ -12,7 +12,7 @@ public class InstructorActivity extends AppCompatActivity {
 
     DB_Management myDB;
     String username;
-    Button viewScheduledButton , scheduleNewClassButton, editClassButton;
+    Button viewScheduledButton , scheduleNewClassButton, editClassButton, instructorDeleteClassButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class InstructorActivity extends AppCompatActivity {
         viewScheduledButton = findViewById(R.id.viewScheduledClassButton);
         scheduleNewClassButton = findViewById(R.id.scheduleNewClassButton);
         editClassButton = findViewById(R.id.instructorEditClassButton);
+        instructorDeleteClassButton = findViewById(R.id.instructorDeleteClassButton);
 
         viewScheduledButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +50,14 @@ public class InstructorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),InstructorEditClassActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        instructorDeleteClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),InstructorDeleteClassActivity.class);
                 startActivity(intent);
             }
         });
