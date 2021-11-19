@@ -23,5 +23,7 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 }
