@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
     DB_Management myDB;
     MyRecyclerViewAdapter adapter;
     Spinner classTypeSpinner, instructorSpinner;
+    List<String> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,12 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
 
         loadClassTypeSpinnerData();
         loadInstructorSpinnerData();
+        data = getScheduledClassesList();
+
+        RecyclerView recyclerView = findViewById(R.id.classListRecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyRecyclerViewAdapter(this, data);
+        recyclerView.setAdapter(adapter);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,10 +52,46 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.classListRecycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, getScheduledClassesList());
-        recyclerView.setAdapter(adapter);
+        classTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if(position == 0){
+                }else{
+                    instructorSpinner.setSelection(0);
+                    Object item = parentView.getItemAtPosition(position);
+                    data = getClassesWithInstructor(item.toString());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+        instructorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if(position == 0){
+                }else{
+                    classTypeSpinner.setSelection(0);
+                    Object item = parentView.getItemAtPosition(position);
+                    data = getClassesWithInstructor(item.toString());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+
+
     }
 
     /**
@@ -56,8 +101,18 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
     private List<String> getScheduledClassesList() {
         myDB = new DB_Management(this );
         List<String> labels = myDB.getAllScheduledClasses();
-        //labels.add(0,"");
+        return labels;
+    }
 
+    private List<String> getClassesWithInstructor(String instructorName){
+        myDB = new DB_Management(this );
+        List<String> labels = myDB.getAllClassesByInstructorName(instructorName);
+        return labels;
+    }
+
+    private List<String> getClassesWithClassType(String classType){
+        myDB = new DB_Management(this );
+        List<String> labels = myDB.getAllClassesByInstructorName(classType);
         return labels;
     }
 
@@ -92,7 +147,6 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
             return mData.size();
         }
 
-
         // stores and recycles views as they are scrolled off screen
         public class ViewHolder extends RecyclerView.ViewHolder {
             TextView myTextView;
@@ -103,7 +157,6 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
 
             }
         }
-
     }
 
     private void loadClassTypeSpinnerData() {
