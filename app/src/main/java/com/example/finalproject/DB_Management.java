@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -512,6 +514,29 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /**
+     * Gets a list of all users in the database.
+     * @return returns a list of strings with usernames of those users. These are the primary keys.
+     */
+    public List<String> getAllInstructors() {
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM users LEFT JOIN roles ON users.username = roles.user_id WHERE role_id = 2";
+
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor cursor = myDB.rawQuery(selectQuery, null);
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
     public List<String> getAllClassTypes() {
         List<String> list = new ArrayList<String>();
 
@@ -537,7 +562,7 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public List<String> getAllScheduledClasses(){
 
-        createClass("Yoga", "easy", 5, 5, 4, "admin");
+        createClass("Yoga", "easy", 52345, 234234235, 4, "admin"); //TODO remove
 
         List<String> list = new ArrayList<String>();
 
@@ -547,13 +572,30 @@ public class DB_Management extends SQLiteOpenHelper {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery(selectQuery, null);
 
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd hh:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+
+        Date d = null;
 
         if (cursor.moveToFirst()) {
             do {
                 String s = "";
-                for(int i =0; i < 7; i++){
-                    s+= cursor.getString(i);
-                    s+= " ";
+                for(int i =1; i < 7; i++){
+                    if(i == 3){
+                        Date date = new Date(cursor.getInt(i));
+                        s += dateFormat.format(date);
+                        s += " ";
+                        s += timeFormat.format(date);
+                    }else if(i == 4) {
+                        s += "-";
+                        Date date = new Date(cursor.getInt(i));
+                        s += timeFormat.format(date);
+                        s += " ";
+                    }else {
+                        s += cursor.getString(i);
+                        s+= " ";
+                    }
                 }
                 list.add(s);
             } while (cursor.moveToNext());
