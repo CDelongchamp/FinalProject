@@ -33,7 +33,6 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_delete_class);
-
         backButton = findViewById(R.id.backButton7);
         classCancelButton = findViewById(R.id.classCancelButton);
         username = LoginActivity.getUser();
@@ -124,9 +123,12 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
     }
 
     private void areYouSureAlert() {
+        String[] temp = classSpinner.getSelectedItem().toString().split(" ");
+        String msg = ("ID: "+temp[1]+" "+temp[2]+" "+temp[3]);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure?")
-                .setTitle("You are about to cancel the following class: "+classSpinner.getSelectedItem().toString().substring(5,15))
+                .setTitle("You are about to cancel the following class: "+msg)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         cancelClass();
