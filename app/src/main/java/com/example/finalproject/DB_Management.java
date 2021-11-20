@@ -556,7 +556,7 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public List<String> getAllScheduledClasses(){
 
-        createClass("Yoga", "easy", 52345, 234234235, 4, "admin"); //TODO remove
+//        createClass("Yoga", "easy", 52345, 234234235, 4, "admin"); //TODO remove
 
         List<String> list = new ArrayList<String>();
 
@@ -683,6 +683,10 @@ public class DB_Management extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
+
+        if (list.isEmpty()) {
+            list.add(null);
+        }
         return list;
     }
 
