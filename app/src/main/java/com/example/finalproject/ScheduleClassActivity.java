@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -114,7 +115,7 @@ public class ScheduleClassActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         selectEndTimeEdit.setText(sdf.format(endCalendar.getTime()));
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, hour, minute, true);// Yes 24 hour time
                 mTimePicker.setTitle("Select the end time");
                 mTimePicker.show();
             }
@@ -123,11 +124,20 @@ public class ScheduleClassActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                String myFormat = "dd/MM/yyyy";
+                startCalendar.set(Calendar.YEAR, year);
+                startCalendar.set(Calendar.MONTH, monthOfYear);
+                startCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                endCalendar.set(Calendar.YEAR, year);
+                endCalendar.set(Calendar.MONTH, monthOfYear);
+                endCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                myCalendar.set(Calendar.YEAR,year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+
+                String myFormat = "dd-MM-yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                 selectDateEdit.setText(sdf.format(myCalendar.getTime()));
             }
@@ -153,22 +163,22 @@ public class ScheduleClassActivity extends AppCompatActivity {
 
                 fitnessType = fitnessTypeSpinner.getSelectedItem().toString();
                 difficulty = difficultySpinner.getSelectedItem().toString();
-                startCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-                startCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
-                endCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-                endCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
+//                startCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
+//                startCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
+//                endCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
+//                endCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
 
                 boolean isFieldCorrect = true;
                 // incorrect field entry cases
-                if (fitnessType.length() == 0) {
-                    fitnessTypeSpinner.setBackgroundColor(Color.RED);
-                    isFieldCorrect = false;
-                }
-                if (difficulty.length() == 0) {
-                    difficultySpinner.setBackgroundColor(Color.RED);
-                    isFieldCorrect = false;
-
-                }
+//                if (fitnessType.length() == 0) {
+//                    fitnessTypeSpinner.setBackgroundColor(Color.RED);
+//                    isFieldCorrect = false;
+//                }
+//                if (difficulty.length() == 0) {
+//                    difficultySpinner.setBackgroundColor(Color.RED);
+//                    isFieldCorrect = false;
+//
+//                }
                 if (selectDateEdit.getText().length() == 0) {
                     selectDateEdit.setHintTextColor(Color.RED);
                     isFieldCorrect = false;
