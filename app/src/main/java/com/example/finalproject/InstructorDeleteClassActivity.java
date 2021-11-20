@@ -1,10 +1,13 @@
 package com.example.finalproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,10 +48,11 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
             }
         });
 
+
         classCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelClass();
+                areYouSureAlert();
             }
         });
 
@@ -73,10 +77,20 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
         List<String> temp = myDB.getAllClassesByInstructorName(username);
         List<String> labels = new ArrayList<>();
 
+        if (temp.get(0) == null) {
+            noClassAlert();
+            return;
+        }
+
         for (String classInfo : temp) {
             List<String> splitClass = Arrays.asList(classInfo.split(" "));
-            String shortenedLevel = splitClass.get(2).substring(0,3);
+            String shortenedLevel = (splitClass.get(2).substring(0,3)+".");
             labels.add("ID: "+splitClass.get(0)+" "+splitClass.get(1) +" "+shortenedLevel+" "+splitClass.get(3)+" at "+splitClass.get(4));
+        }
+
+        if (labels.isEmpty()) {
+            noClassAlert();
+            return;
         }
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
@@ -89,5 +103,42 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
 
     }
 
+    private void noClassAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("")
+                .setTitle("You currently have no classes.")
+                .setPositiveButton("Go back", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Add a class", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                        Intent intent = new Intent(getApplicationContext(),ScheduleClassActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void areYouSureAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure?")
+                .setTitle("You are about to cancel the following class: "+classSpinner.getSelectedItem().toString().substring(5,15))
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        cancelClass();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
 
 }
