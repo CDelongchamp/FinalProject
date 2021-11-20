@@ -58,7 +58,8 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
                 }else{
                     instructorSpinner.setSelection(0);
                     Object item = parentView.getItemAtPosition(position);
-                    data = getClassesWithInstructor(item.toString());
+                    data.clear();
+                    data.addAll(getClassesWithClassType(item.toString()));
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -77,7 +78,8 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
                 }else{
                     classTypeSpinner.setSelection(0);
                     Object item = parentView.getItemAtPosition(position);
-                    data = getClassesWithInstructor(item.toString());
+                    data.clear();
+                    data.addAll(getClassesWithInstructor(item.toString()));
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -111,7 +113,7 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
 
     private List<String> getClassesWithClassType(String classType){
         myDB = new DB_Management(this );
-        List<String> labels = myDB.getAllClassesByInstructorName(classType);
+        List<String> labels = myDB.getAllClassesByClassName(classType);
         return labels;
     }
 
