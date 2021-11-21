@@ -27,6 +27,14 @@ public class testSignUpActivity {
         // since the following pass Ottawa#12345 contains a space character therefore it is not a valid password, so the method returns a false
         assertFalse(SignUpActivity.isPasswordContainsEmptySpace("Ottawa#123@45 "));
     }
+
+    @Test
+    public void  isPasswordTooLong(){
+        // since following password "Ottawa" does not contain a space therefore our method returns True
+        assertTrue(SignUpActivity.isPasswordTooLong("abcd1234"));
+        // since the following pass Ottawa#12345 contains a space character therefore it is not a valid password, so the method returns a false
+        assertFalse(SignUpActivity.isPasswordTooLong("abcd1234abcd12344"));
+    }
 }
 
 

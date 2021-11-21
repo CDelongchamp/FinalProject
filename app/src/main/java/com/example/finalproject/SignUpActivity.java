@@ -49,7 +49,13 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(user.equals("") || pass.equals("")) {
                     Toast.makeText(SignUpActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else if (pass.length()>16) {
+                        Toast.makeText(SignUpActivity.this, "Password is too long.", Toast.LENGTH_SHORT).show();
+
+                }
+
+                 else {
 
 
                     int regResult = myDB.insertNewUser(user,pass,is_instructor,is_member);
@@ -104,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
     /** This method checks if the user name is valid , meaning only contains alphabets
      *
      * @param name takes in the String username anc checks if it is alphabetical
-     * @return a boolean value, if it is true it means our password only contains alphabets if there are numbers or other characters our useername is invalid
+     * @return a boolean value, if it is true it means our password only contains alphabets if there are numbers or other characters our username is invalid
      */
     public static boolean isValidName(String name){
 
@@ -117,6 +123,15 @@ public class SignUpActivity extends AppCompatActivity {
      */
     public static boolean isPasswordContainsEmptySpace(String password){
         return !password.matches(".*\\s+.*");
+    }
+
+    public static boolean isPasswordTooLong(String password){
+        boolean testLong = false;
+        if (password.length()<16)
+        {
+            testLong = true;
+        }
+        return testLong;
     }
 
 }
