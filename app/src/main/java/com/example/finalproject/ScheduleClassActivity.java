@@ -206,14 +206,31 @@ public class ScheduleClassActivity extends AppCompatActivity {
 
                 }
 
-                if (isFieldCorrect) {
+                boolean isAlreadyTaught = false;
+                List<String> classesByName = myDB.getAllClassesByClassName(fitnessType);
+                for (String classes : classesByName) {
+                    if (classes.split(" ")[2].split("-")[1].equals(selectDateEdit.getText().toString().split("-")[1])) {
+                        isAlreadyTaught = true;
+                        break;
+                    }
+                }
+
+
+                if (isFieldCorrect && !isAlreadyTaught) {
                     maximumCapacity = Integer.parseInt(maximumCapacityNumber.getText().toString());
                     startTime = startCalendar.getTime().getTime();
                     endTime = endCalendar.getTime().getTime();
                     boolean isCreated = myDB.createClass(fitnessType,difficulty,startTime,endTime,maximumCapacity,username);
                     finish();
                 } else {
-                    Toast.makeText(ScheduleClassActivity.this, "Make sure all of the fields are not empty.", Toast.LENGTH_SHORT).show();
+                    if (!isFieldCorrect){
+                        Toast.makeText(ScheduleClassActivity.this, "Make sure all of the fields are entered correctly.", Toast.LENGTH_SHORT).show();
+                    }
+                    if (isAlreadyTaught) {
+                        Toast.makeText(ScheduleClassActivity.this, "Another instructor is already teaching this class. Change the day or the class.", Toast.LENGTH_SHORT).show();
+                        selectDateEdit.setText("");
+                        selectDateEdit.setHintTextColor(Color.RED);
+                    }
                 }
             }
         });
