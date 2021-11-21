@@ -125,6 +125,7 @@ public class SignUpActivity extends AppCompatActivity {
         return !password.matches(".*\\s+.*");
     }
 
+
     public static boolean isPasswordTooLong(String password){
         boolean testLong = false;
         if (password.length()<16)
@@ -133,5 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
         return testLong;
     }
+
+
 
 }
