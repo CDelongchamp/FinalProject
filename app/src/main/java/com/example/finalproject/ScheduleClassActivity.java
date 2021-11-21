@@ -23,14 +23,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
 public class ScheduleClassActivity extends AppCompatActivity {
 
-    final Calendar myCalendar = Calendar.getInstance();
-    final Calendar startCalendar = Calendar.getInstance();
-    final Calendar endCalendar = Calendar.getInstance();
+    Calendar myCalendar = new GregorianCalendar();
+    Calendar startCalendar = new GregorianCalendar();
+    Calendar endCalendar = new GregorianCalendar();
 
     Button backButton, scheduleClass;
     Spinner fitnessTypeSpinner, difficultySpinner;
@@ -89,7 +90,7 @@ public class ScheduleClassActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         selectStartTimeEdit.setText(sdf.format(startCalendar.getTime()));
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, 0, 0, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select the start time");
                 mTimePicker.show();
             }
@@ -115,7 +116,7 @@ public class ScheduleClassActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         selectEndTimeEdit.setText(sdf.format(endCalendar.getTime()));
                     }
-                }, hour, minute, true);// Yes 24 hour time
+                }, 0, 0, true);// Yes 24 hour time
                 mTimePicker.setTitle("Select the end time");
                 mTimePicker.show();
             }
@@ -137,7 +138,7 @@ public class ScheduleClassActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
 
-                String myFormat = "dd-MM-yyyy";
+                String myFormat = "MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                 selectDateEdit.setText(sdf.format(myCalendar.getTime()));
             }
@@ -197,6 +198,12 @@ public class ScheduleClassActivity extends AppCompatActivity {
                 if (maximumCapacityNumber.getText().toString().length() == 0) {
                     maximumCapacityNumber.setHintTextColor(Color.RED);
                     isFieldCorrect = false;
+                }
+                if (startCalendar.getTime().getTime() >= endCalendar.getTime().getTime()) {
+                    selectStartTimeEdit.setHintTextColor(Color.RED);
+                    selectEndTimeEdit.setHintTextColor(Color.RED);
+                    isFieldCorrect = false;
+
                 }
 
                 if (isFieldCorrect) {

@@ -48,6 +48,10 @@ public class AddClassActivity extends AppCompatActivity {
                     Toast.makeText(AddClassActivity.this, "Please enter a name.", Toast.LENGTH_SHORT).show();
                     classType.setHintTextColor(Color.RED);
                     return;
+                } else if (type.contains(" ")) {
+                    Toast.makeText(AddClassActivity.this, "Please make sure there are no spaces in the name.", Toast.LENGTH_SHORT).show();
+                    classType.setHintTextColor(Color.RED);
+                    return;
                 }
 
                 if (myDB.createClassType(type, description)) {
