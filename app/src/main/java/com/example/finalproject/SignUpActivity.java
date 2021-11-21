@@ -53,9 +53,15 @@ public class SignUpActivity extends AppCompatActivity {
                 else if (pass.length()>16) {
                         Toast.makeText(SignUpActivity.this, "Password is too long.", Toast.LENGTH_SHORT).show();
 
+
+
+                } else if (user.length()>16) {
+                    Toast.makeText(SignUpActivity.this, "Username is too long.", Toast.LENGTH_SHORT).show();
+
+
                 }
 
-                 else {
+                else {
 
 
                     int regResult = myDB.insertNewUser(user,pass,is_instructor,is_member);
@@ -135,6 +141,14 @@ public class SignUpActivity extends AppCompatActivity {
         return testLong;
     }
 
+    public static boolean isUsernameTooLong(String username){
+        boolean testLong = false;
+        if (username.length()<16)
+        {
+            testLong = true;
+        }
+        return testLong;
+    }
 
 
 }
