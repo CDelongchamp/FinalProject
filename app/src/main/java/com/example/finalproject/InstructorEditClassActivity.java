@@ -23,14 +23,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
 public class InstructorEditClassActivity extends AppCompatActivity {
 
-    final Calendar myCalendar = Calendar.getInstance();
-    final Calendar startCalendar = Calendar.getInstance();
-    final Calendar endCalendar = Calendar.getInstance();
+    Calendar myCalendar = Calendar.getInstance();
+    Calendar startCalendar = new GregorianCalendar();
+    Calendar endCalendar = new GregorianCalendar();
 
     DB_Management myDB;
     Button backButton, saveChangesButton;
@@ -40,6 +41,8 @@ public class InstructorEditClassActivity extends AppCompatActivity {
     int classID, capacity;
     String type, difficulty;
     long startTime, endTime;
+    int startHour = 0, startMin = 0, endHour = 0, endMin = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +80,6 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                     return;
                 }
 
-                Calendar currentTime = Calendar.getInstance();
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(InstructorEditClassActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -90,7 +90,7 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         selectStartTimeEdit.setText(sdf.format(startCalendar.getTime()));
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, startHour, startMin, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select the start time");
                 mTimePicker.show();
             }
@@ -103,9 +103,6 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                     return;
                 }
 
-                Calendar currentTime = Calendar.getInstance();
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(InstructorEditClassActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -116,7 +113,7 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         selectEndTimeEdit.setText(sdf.format(endCalendar.getTime()));
                     }
-                }, hour, minute, true);// Yes 24 hour time
+                }, endHour, endMin, true);// Yes 24 hour time
                 mTimePicker.setTitle("Select the end time");
                 mTimePicker.show();
             }
@@ -129,7 +126,15 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                String myFormat = "dd/MM/yyyy";
+                startCalendar.set(Calendar.YEAR, year);
+                startCalendar.set(Calendar.MONTH, monthOfYear);
+                startCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                endCalendar.set(Calendar.YEAR, year);
+                endCalendar.set(Calendar.MONTH, monthOfYear);
+                endCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "dd-MM-yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                 selectDateEdit.setText(sdf.format(myCalendar.getTime()));
             }
@@ -169,10 +174,30 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                maximumCapacityNumber.setText(selectedItem[3].split("-")[0]);
 
                 // update values
                 type = selectedItem[1];
                 difficulty = selectedItem[2];
+                startHour = Integer.parseInt(selectedItem[4].split("-")[0].split(":")[0]);
+                startMin = Integer.parseInt(selectedItem[4].split("-")[0].split(":")[1]);
+                endHour = Integer.parseInt(selectedItem[4].split("-")[1].split(":")[0]);
+                endMin = Integer.parseInt(selectedItem[4].split("-")[1].split(":")[1]);
+                myCalendar.set(Calendar.MONTH, Integer.parseInt(selectedItem[3].split("-")[0])-1);          // -1 because $%#!& %!$@
+                myCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(selectedItem[3].split("-")[1]));
+
+                startCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
+                startCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
+                startCalendar.set(Calendar.DAY_OF_MONTH, myCalendar.get(Calendar.DAY_OF_MONTH));
+                startCalendar.set(Calendar.HOUR_OF_DAY, startHour);
+                startCalendar.set(Calendar.MINUTE, startMin);
+
+                endCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
+                endCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
+                endCalendar.set(Calendar.DAY_OF_MONTH, myCalendar.get(Calendar.DAY_OF_MONTH));
+                endCalendar.set(Calendar.HOUR_OF_DAY, endHour);
+                endCalendar.set(Calendar.MINUTE, endMin);
+
 
                 // temporary fix, spaces in class type. ex.: mortal combat
                 try {
@@ -199,7 +224,7 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                 selectDateEdit.setText(selectedItem[3]);
                 selectEndTimeEdit.setText(selectedItem[4].split("-")[1]);
                 selectStartTimeEdit.setText(selectedItem[4].split("-")[0]);
-                maximumCapacityNumber.setText(Integer.toString(capacity));
+//                maximumCapacityNumber.setText(Integer.toString(capacity));
 
             }
 
@@ -214,10 +239,6 @@ public class InstructorEditClassActivity extends AppCompatActivity {
 
 //                fitnessType = fitnessTypeSpinner.getSelectedItem().toString();
 //                difficulty = difficultySpinner.getSelectedItem().toString();
-                startCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-                startCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
-                endCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-                endCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
 
                 boolean isFieldCorrect = true;
                 // incorrect field entry cases
