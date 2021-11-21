@@ -97,6 +97,26 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+    }
+
+    /** This method checks if the user name is valid , meaning only contains alphabets
+     *
+     * @param name takes in the String username anc checks if it is alphabetical
+     * @return a boolean value, if it is true it means our password only contains alphabets if there are numbers or other characters our useername is invalid
+     */
+    public static boolean isValidName(String name){
+
+        return name.matches("[a-zA-Z]+");
+    }
+    /** This method checks if the password is valid , meaning it does not contain any space
+     *
+     * @param password takes in the String password and checks if it contains any white space,
+     * @return a boolean value, returning true means that it does not contain white space and can be used as a password
+     */
+    public static boolean isPasswordContainsEmptySpace(String password){
+        return !password.matches(".*\\s+.*");
     }
 
 }
