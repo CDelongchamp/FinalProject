@@ -30,10 +30,18 @@ public class testSignUpActivity {
 
     @Test
     public void  isPasswordTooLong(){
-        // since following password "Ottawa" does not contain a space therefore our method returns True
+        // since following password is less than 16 characters our method returns True
         assertTrue(SignUpActivity.isPasswordTooLong("abcd1234"));
-        // since the following pass Ottawa#12345 contains a space character therefore it is not a valid password, so the method returns a false
+        // since following password is more than 16 characters our method returns True
         assertFalse(SignUpActivity.isPasswordTooLong("abcd1234abcd12344"));
+    }
+
+    @Test
+    public void isUsernameTooLong(){
+        // since following username is less than 16 characters our method returns True
+        assertTrue(SignUpActivity.isUsernameTooLong("abcd1234"));
+        // since following username is more than 16 characters our method returns True
+        assertFalse(SignUpActivity.isUsernameTooLong("abcd1234abcd12344"));
     }
 }
 
