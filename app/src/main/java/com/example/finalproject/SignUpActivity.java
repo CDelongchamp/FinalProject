@@ -119,4 +119,6 @@ public class SignUpActivity extends AppCompatActivity {
         return !password.matches(".*\\s+.*");
     }
 
+
+
 }
