@@ -15,7 +15,7 @@ public class MemberActivity extends AppCompatActivity {
     String username;
 //    String[] role;
     String role;
-    Button viewCurrentClassesButton , searchAllClassesButton, editClassButton, instructorDeleteClassButton;
+    Button viewCurrentClassesButton , searchAllClassesButton;
 
     @SuppressLint("SetTextI18n")
     @Override

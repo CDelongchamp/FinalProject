@@ -43,8 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-                Boolean is_member = checkBoxMember.isChecked();
-                Boolean is_instructor = checkBoxInstructor.isChecked();
+                boolean is_member = checkBoxMember.isChecked();
+                boolean is_instructor = checkBoxInstructor.isChecked();
 
 
                 if(user.equals("") || pass.equals("")) {

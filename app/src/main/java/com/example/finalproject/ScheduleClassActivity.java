@@ -1,13 +1,9 @@
 package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,10 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -38,8 +31,6 @@ public class ScheduleClassActivity extends AppCompatActivity {
     EditText maximumCapacityNumber, selectStartTimeEdit, selectEndTimeEdit, selectDateEdit;
     DB_Management myDB;
     String username;
-
-    int startTimeHour, endTimeHour, startTimeMinute, endTimeMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +68,6 @@ public class ScheduleClassActivity extends AppCompatActivity {
                     return;
                 }
 
-                Calendar currentTime = Calendar.getInstance();
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(ScheduleClassActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -103,9 +91,6 @@ public class ScheduleClassActivity extends AppCompatActivity {
                     return;
                 }
 
-                Calendar currentTime = Calendar.getInstance();
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(ScheduleClassActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -164,22 +149,9 @@ public class ScheduleClassActivity extends AppCompatActivity {
 
                 fitnessType = fitnessTypeSpinner.getSelectedItem().toString();
                 difficulty = difficultySpinner.getSelectedItem().toString();
-//                startCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-//                startCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
-//                endCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-//                endCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
 
                 boolean isFieldCorrect = true;
-                // incorrect field entry cases
-//                if (fitnessType.length() == 0) {
-//                    fitnessTypeSpinner.setBackgroundColor(Color.RED);
-//                    isFieldCorrect = false;
-//                }
-//                if (difficulty.length() == 0) {
-//                    difficultySpinner.setBackgroundColor(Color.RED);
-//                    isFieldCorrect = false;
-//
-//                }
+
                 if (selectDateEdit.getText().length() == 0) {
                     selectDateEdit.setHintTextColor(Color.RED);
                     isFieldCorrect = false;
@@ -220,7 +192,7 @@ public class ScheduleClassActivity extends AppCompatActivity {
                     maximumCapacity = Integer.parseInt(maximumCapacityNumber.getText().toString());
                     startTime = startCalendar.getTime().getTime();
                     endTime = endCalendar.getTime().getTime();
-                    boolean isCreated = myDB.createClass(fitnessType,difficulty,startTime,endTime,maximumCapacity,username);
+                    myDB.createClass(fitnessType,difficulty,startTime,endTime,maximumCapacity,username);
                     finish();
                 } else {
                     if (!isFieldCorrect){

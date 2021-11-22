@@ -2,16 +2,14 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -52,7 +50,7 @@ public class EditUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(myDB.editUserRoles(username, isInstructorBox.isChecked(), isMemberBox.isChecked())){
-                    Toast.makeText(EditUserActivity.this, username + " was edited succesfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditUserActivity.this, username + " was edited successfully.", Toast.LENGTH_SHORT).show();
 
                 }else{
                     Toast.makeText(EditUserActivity.this, username + " was not updated.", Toast.LENGTH_SHORT).show();
@@ -95,9 +93,6 @@ public class EditUserActivity extends AppCompatActivity {
                 });
     }
 
-    public void fetchUserData(){
-
-    }
 
     /**
      * Function to load the spinner data from SQLite database
