@@ -1,11 +1,8 @@
 package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -55,7 +52,7 @@ public class RemoveUserActivity extends AppCompatActivity {
         Boolean deleteUser = myDB.deleteUser(username);
 
         if(deleteUser)
-            Toast.makeText(RemoveUserActivity.this, username + " was deleted succesfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RemoveUserActivity.this, username + " was deleted successfully.", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(RemoveUserActivity.this, username + " was not deleted.", Toast.LENGTH_SHORT).show();
 

@@ -23,7 +23,7 @@ public class InstructorActivity extends AppCompatActivity {
         username = LoginActivity.getUser();
 
         TextView welcome = findViewById(R.id.textView9);
-        welcome.setText("welcome, " + username);
+        welcome.setText("Welcome, " + username);
 
         viewScheduledButton = findViewById(R.id.viewScheduledClassButton);
         scheduleNewClassButton = findViewById(R.id.scheduleNewClassButton);

@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -54,8 +53,7 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
         classTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(position == 0){
-                }else{
+                if(position != 0){
                     instructorSpinner.setSelection(0);
                     Object item = parentView.getItemAtPosition(position);
                     data.clear();
@@ -74,8 +72,7 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
         instructorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(position == 0){
-                }else{
+                if(position != 0){
                     classTypeSpinner.setSelection(0);
                     Object item = parentView.getItemAtPosition(position);
                     data.clear();
@@ -98,23 +95,21 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
     /**
      * Function to load the spinner data from SQLite database
      *
-     * @return*/
+     * @return a list  from the SQLite database.
+     */
     private List<String> getScheduledClassesList() {
         myDB = new DB_Management(this );
-        List<String> labels = myDB.getAllScheduledClasses();
-        return labels;
+        return myDB.getAllScheduledClasses();
     }
 
     private List<String> getClassesWithInstructor(String instructorName){
         myDB = new DB_Management(this );
-        List<String> labels = myDB.getAllClassesByInstructorName(instructorName);
-        return labels;
+        return myDB.getAllClassesByInstructorName(instructorName);
     }
 
     private List<String> getClassesWithClassType(String classType){
         myDB = new DB_Management(this );
-        List<String> labels = myDB.getAllClassesByClassName(classType);
-        return labels;
+        return myDB.getAllClassesByClassName(classType);
     }
 
     public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {

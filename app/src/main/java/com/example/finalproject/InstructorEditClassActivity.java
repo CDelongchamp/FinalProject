@@ -275,7 +275,7 @@ public class InstructorEditClassActivity extends AppCompatActivity {
                     capacity = Integer.parseInt(maximumCapacityNumber.getText().toString());
                     startTime = startCalendar.getTime().getTime();
                     endTime = endCalendar.getTime().getTime();
-                    boolean isUpdated = myDB.updateClass(classID, type, difficulty, startTime, endTime, capacity, username);
+                    myDB.updateClass(classID, type, difficulty, startTime, endTime, capacity, username);
                     finish();
                 } else {
                     Toast.makeText(InstructorEditClassActivity.this, "Make sure all of the fields are not empty.", Toast.LENGTH_SHORT).show();

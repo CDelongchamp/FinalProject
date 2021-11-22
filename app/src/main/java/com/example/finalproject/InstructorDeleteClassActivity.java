@@ -2,22 +2,14 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +55,7 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
         Boolean cancelClass = myDB.deleteClass(classID);
 
         if(cancelClass) {
-            Toast.makeText(InstructorDeleteClassActivity.this, "Class was cancelled succesfully.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(InstructorDeleteClassActivity.this, "Class was cancelled successfully.", Toast.LENGTH_SHORT).show();
             finish();
         } else {
             Toast.makeText(InstructorDeleteClassActivity.this, "Class was not cancelled.", Toast.LENGTH_SHORT).show();

@@ -91,20 +91,6 @@ public class DB_Management extends SQLiteOpenHelper {
         // TODO: Figure out a better way of doing this.
     }
 
-    public Boolean insertData(String username, String password) { // TODO: fix this so that it has a more accurate name.
-        SQLiteDatabase myDB = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("username", username);
-        contentValues.put("password", password);
-        long result = myDB.insert("users", null, contentValues);
-
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     /**
      *
      * @param username The username of the user.
@@ -117,26 +103,15 @@ public class DB_Management extends SQLiteOpenHelper {
         if(!is_instructor && !is_member)
             return 4;
 
-        SQLiteDatabase myDB = this.getWritableDatabase();
-        //String query = "INSERT INTO users(username,password) VALUES('" + username + "', '" + password + "')";
-        String query = "";
 
         ContentValues insertValues = new ContentValues();
         insertValues.put("username",username);
         insertValues.put("password",password);
         long users = db.insert("users", null, insertValues);
 
-
-        //Cursor cursor = db.rawQuery(query, null);
-        //if(cursor.moveToFirst()){
-        if(users > 0){
-            // Good, no return.
-        }else{
+        if(users <= 0){
             return 1;
-            // Good, no return.
         }
-
-
 
         if(is_instructor) {
             insertValues = new ContentValues();
@@ -144,27 +119,23 @@ public class DB_Management extends SQLiteOpenHelper {
             insertValues.put("role_id",2 +"");
             long result = db.insert("roles", null, insertValues);
 
-            if (result > 0) {
-                // Good, no return.
-            } else {
+            if (result <= 0) {
                 return 2;
             }
         }
+
         if(is_member) {
             insertValues = new ContentValues();
             insertValues.put("user_id",username);
             insertValues.put("role_id",3+"");
             long result = db.insert("roles", null, insertValues);
 
-            if (result > 0) {
-                // Good, no return.
-            } else {
+            if (result <= 0) {
                 return 3;
             }
         }
 
         return 0;
-
 
     }
 
@@ -179,18 +150,9 @@ public class DB_Management extends SQLiteOpenHelper {
             return false;
         }
 
-        SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "DELETE FROM users WHERE username ='" + username + "'";
+        db.delete("users", "username ='" + username + "'", null);
 
-        int users = myDB.delete("users", "username ='" + username + "'", null);
-
-        //Cursor cursor = db.rawQuery(query, null);
-
-        if(checkUsername(username)){
-            return false; // It was found. Did not delete.
-        }else{
-            return true;
-        }
+        return !checkUsername(username); // It was found. Did not delete.
     }
 
     /** Method takes in both the username and the role_id and deletes the corresponding pair in the database.
@@ -200,7 +162,6 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns true if successful, false otherwise.
      */
     public Boolean deleteRole(String username, int role_id){
-        SQLiteDatabase myDB = this.getWritableDatabase();
         String query = "DELETE FROM roles WHERE user_id ='" + username + "' AND role_id = " + role_id;
 
         Cursor cursor = db.rawQuery(query, null);
@@ -215,7 +176,7 @@ public class DB_Management extends SQLiteOpenHelper {
 
     /** Method deletes a users Member role from the role table. Helper method.
      *
-     * @param username whos member role is to be deleted.
+     * @param username who's member role is to be deleted.
      * @return returns true if successful, false otherwise.
      */
     public Boolean deleteMemberRole(String username){
@@ -224,7 +185,7 @@ public class DB_Management extends SQLiteOpenHelper {
 
     /** Method deletes a users Instructor role from the role table. Helper method.
      *
-     * @param username whos Instructor role is to be deleted.
+     * @param username who's Instructor role is to be deleted.
      * @return returns true if successful, false otherwise.
      */
     public Boolean deleteInstructorRole(String username){
@@ -237,8 +198,7 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns true if they found that user.
      */
     public Boolean checkUsername(String username) {
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery("select * from users where username = ?",new String[] {username});
+        Cursor cursor = db.rawQuery("select * from users where username = ?",new String[] {username});
         if(cursor.getCount()>0) {
             cursor.close();
             return true;
@@ -255,7 +215,7 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param password the password to validate
      * @return returns true if it's a valid login.
      */
-    public Boolean checkusernamePassword(String username, String password) {
+    public Boolean checkUsernameAndPassword(String username, String password) {
         SQLiteDatabase myDB = this.getReadableDatabase();
         Cursor cursor = myDB.rawQuery("select * from users where username = ? and password = ?",new String[] {username,password});
         if(cursor.getCount()>0) {
@@ -278,18 +238,6 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return Returns true if it has been added, false otherwise.
      */
     public Boolean createClass(String type, String difficulty, long start_time, long end_time, int capacity, String instructor){
-//        SQLiteDatabase myDB = this.getWritableDatabase();
-//        String query = "INSERT INTO classes (type,difficulty,start_time,end_time,capacity,instructor) VALUES(\'" + type + "\', \'" + difficulty + "\', " + start_time + ", " + end_time +", " + capacity + ", \'" + instructor + "\' )";
-//
-//        Cursor cursor = db.rawQuery(query, null);
-//        if(cursor.getCount() > 0){ // if count > 0 class was successfully created.
-//            cursor.close();
-//            return true;
-//        }else{
-//            cursor.close();
-//            return false;
-//        }
-
         ContentValues contentValues = new ContentValues();
         contentValues.put("type", type);
         contentValues.put("difficulty", difficulty);
@@ -309,18 +257,14 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return Returns true if it's been added.
      */
     public Boolean createClassType(String class_type, String description){
-        SQLiteDatabase myDB = this.getWritableDatabase();
 
         ContentValues insertValues = new ContentValues();
+
         insertValues.put("class_type",class_type);
         insertValues.put("description",description);
         long insertionStatus = db.insert("class_types", null, insertValues);
 
-        if(insertionStatus > 0  ){
-            return true;
-        }else{
-            return false;
-        }
+        return insertionStatus > 0;
     }
 
     /**
@@ -329,14 +273,10 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns true if deleted.
      */
     public Boolean deleteClassType(String class_type){
-        SQLiteDatabase myDB = this.getWritableDatabase();
-        int rowsDeleted = myDB.delete("class_types", "class_type ='" + class_type + "'", null);
 
-        if(rowsDeleted > 0){
-            return true;
-        }else{
-            return false;
-        }
+        int rowsDeleted = db.delete("class_types", "class_type ='" + class_type + "'", null);
+
+        return rowsDeleted > 0;
     }
 
     /**
@@ -347,18 +287,15 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns true if successful.
      */
     public Boolean editClassType(String old_class_type, String new_class_type, String description){
-        SQLiteDatabase myDB = this.getWritableDatabase();
+
         ContentValues cv = new ContentValues();
+
         cv.put("class_type", new_class_type);
         cv.put("description", description);
 
+        int rowsUpdated = db.update("class_types", cv, "class_type =?", new String[]{old_class_type});
 
-        int rowsUpdated = myDB.update("class_types", cv, "class_type =?", new String[]{old_class_type});
-
-        if(rowsUpdated>0){
-            return true;
-        }else
-            return false;
+        return rowsUpdated > 0;
 
     }
 
@@ -378,8 +315,7 @@ public class DB_Management extends SQLiteOpenHelper {
             if(!addInstructorRole(username))
                 return false;
         if(isMember)
-            if(!addMemberRole(username))
-                return false;
+            return addMemberRole(username);
 
         return true;
 
@@ -391,16 +327,14 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns true if the user gets a member role added.
      */
     public Boolean addMemberRole(String username){
-        SQLiteDatabase myDB = this.getWritableDatabase();
+
         ContentValues cv = new ContentValues();
+
         cv.put("user_id", username);
         cv.put("role_id", 3);
-        long rowsUpdated = myDB.insert("roles", null, cv);
+        long rowsUpdated = db.insert("roles", null, cv);
 
-        if(rowsUpdated>0){
-            return true;
-        }else
-            return false;
+        return rowsUpdated > 0;
     }
 
     /** Method adds the instructor role to the user.
@@ -409,17 +343,15 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns true if successful.
      */
     public Boolean addInstructorRole(String username){
-        SQLiteDatabase myDB = this.getWritableDatabase();
+
         ContentValues cv = new ContentValues();
+
         cv.put("user_id", username);
         cv.put("role_id", 2);
-        long rowsUpdated = myDB.insert("roles", null, cv);
+        long rowsUpdated = db.insert("roles", null, cv);
 
 
-        if(rowsUpdated>0){
-            return true;
-        }else
-            return false;
+        return rowsUpdated > 0;
     }
 
     /** Method deletes a class from the class table using the class_id.
@@ -428,30 +360,31 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns true if deleted, otherwise returns false.
      */
     public Boolean deleteClass(int class_id){
-        SQLiteDatabase myDB = this.getWritableDatabase();
-        String query = "DELETE FROM classes WHERE class_id =" + class_id;
 
+        String query = "DELETE FROM classes WHERE class_id =" + class_id;
         Cursor cursor = db.rawQuery(query, null);
+
         return cursor.getCount() <= 0;
     }
 
     /**
      * Method updates a class, all fields except class_id can be updated.
      * @param class_id the class to be updated.
-     * @param type
-     * @param difficulty
-     * @param start_time
-     * @param end_time
-     * @param capacity
-     * @param instructor
+     * @param type type of class, which should be a class present in the class_types table.
+     * @param difficulty the difficulty, which should be found in the class_difficulties table.
+     * @param start_time Time in utc of when the class starts,
+     * @param end_time  Time in utc of when the class ends.
+     * @param capacity the capacity of the class.
+     * @param instructor the instructor, of which should be a person present in the users table who has a role of instructor in the roles table.
      * @return returns true if success, false otherwise.
      */
     public Boolean updateClass(int class_id, String type, String difficulty, long start_time, long end_time, int capacity, String instructor){
-        SQLiteDatabase myDB = this.getWritableDatabase();
+
         String query = "UPDATE classes" +
                 " SET type = \'" + type + "\', difficulty = \'" + difficulty + "\', start_time = " + start_time + ", end_time = " + end_time + ", capacity = " + capacity + ", instructor = \'" + instructor +
                 "\' WHERE class_id = " + class_id;
         Cursor cursor = db.rawQuery(query, null);
+
         if(cursor.moveToFirst()){
             cursor.close();
             return true;
@@ -469,7 +402,6 @@ public class DB_Management extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public String[] getUserRoles(String username){
         String[] results = new String[3];
-        SQLiteDatabase myDB = this.getReadableDatabase();
         String query = "SELECT role_id FROM roles WHERE user_id = '" + username + "'";
         Cursor cursor = db.rawQuery(query, null);
 
@@ -490,13 +422,10 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns a list of strings with usernames of those users. These are the primary keys.
      */
     public List<String> getAllUsers() {
+
         List<String> list = new ArrayList<String>();
-
-        // Select All Query
         String selectQuery = "SELECT  * FROM users";
-
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
 
         if (cursor.moveToFirst()) {
@@ -513,13 +442,10 @@ public class DB_Management extends SQLiteOpenHelper {
      * @return returns a list of strings with usernames of those users. These are the primary keys.
      */
     public List<String> getAllInstructors() {
+
         List<String> list = new ArrayList<String>();
-
-        // Select All Query
         String selectQuery = "SELECT  * FROM users LEFT JOIN roles ON users.username = roles.user_id WHERE role_id = 2";
-
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
 
         if (cursor.moveToFirst()) {
@@ -532,13 +458,10 @@ public class DB_Management extends SQLiteOpenHelper {
     }
 
     public List<String> getAllClassTypes() {
+
         List<String> list = new ArrayList<String>();
-
-        // Select All Query
         String selectQuery = "SELECT  * FROM class_types";
-
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
 
         if (cursor.moveToFirst()) {
@@ -552,25 +475,16 @@ public class DB_Management extends SQLiteOpenHelper {
 
     /** Method returns a list of schedules classes.
      *
-     * @return returns a list of space seperated elements of the classes and their info.
+     * @return returns a list of space separated elements of the classes and their info.
      */
     public List<String> getAllScheduledClasses(){
 
-//        createClass("Yoga", "easy", 52345, 234234235, 4, "admin"); //TODO remove
-
         List<String> list = new ArrayList<String>();
-
-        // Select All Query
         String selectQuery = "SELECT  * FROM classes";
-
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);
-
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+        Cursor cursor = db.rawQuery(selectQuery, null);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
-        Date d = null;
 
         if (cursor.moveToFirst()) {
             do {
@@ -600,21 +514,16 @@ public class DB_Management extends SQLiteOpenHelper {
 
 
 
-    /**
+    /** Method retrieves a list of classes that have the appropriate class name.
      *
-     * @param className
-     * @return
+     * @param className the type of class we want to see, like Kickboxing.
+     * @return a list of Strings with the specified classes.
      */
     public List<String> getAllClassesByClassName(String className){
+
         List<String> list = new ArrayList<String>();
-
-        // Select All Query
         String selectQuery = "SELECT  * FROM classes WHERE type = '" + className + "'";
-
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);
-
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+        Cursor cursor = db.rawQuery(selectQuery, null);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
@@ -644,21 +553,16 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
-    /**
+    /** Method gets a list of classes for the given instructor name.
      *
-     * @param instructorName
-     * @return
+     * @param instructorName the instructor who's classes we would like to see.
+     * @return returns a list of Strings of classes run by instructor.
      */
     public List<String> getAllClassesByInstructorName(String instructorName){
+
         List<String> list = new ArrayList<String>();
-
-        // Select All Query
         String selectQuery = "SELECT  * FROM classes WHERE instructor = '" + instructorName + "'";
-
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);
-
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+        Cursor cursor = db.rawQuery(selectQuery, null);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
@@ -692,19 +596,14 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
-    /**
+    /** Method returns a list of all the classes and their descriptions.
      *
-     * @return
+     * @return returns a list of all class Descriptions.
      */
     public List<String> getAllClassDescriptions() {
         List<String> list = new ArrayList<String>();
-
-        // Select All Query
         String selectQuery = "SELECT  * FROM class_types";
-
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor cursor = myDB.rawQuery(selectQuery, null);
-
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {

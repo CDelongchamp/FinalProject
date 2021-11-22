@@ -38,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (user.equals("") || pass.equals("")) {
                     Toast.makeText(LoginActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Boolean result = myDB.checkusernamePassword(user, pass);
-                    if (result == true) {
+                    Boolean result = myDB.checkUsernameAndPassword(user, pass);
+                    if (result) {
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                         startActivity(intent);
 
