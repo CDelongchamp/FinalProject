@@ -577,13 +577,13 @@ public class DB_Management extends SQLiteOpenHelper {
                 String s = "";
                 for(int i =1; i < 7; i++){
                     if(i == 3){
-                        Date date = new Date(cursor.getInt(i));
+                        Date date = new Date(cursor.getLong(i));
                         s += dateFormat.format(date);
                         s += " ";
                         s += timeFormat.format(date);
                     }else if(i == 4) {
                         s += "-";
-                        Date date = new Date(cursor.getInt(i));
+                        Date date = new Date(cursor.getLong(i));
                         s += timeFormat.format(date);
                         s += " ";
                     }else {
@@ -623,13 +623,13 @@ public class DB_Management extends SQLiteOpenHelper {
                 String s = "";
                 for(int i =1; i < 7; i++){
                     if(i == 3){
-                        Date date = new Date(cursor.getInt(i));
+                        Date date = new Date(cursor.getLong(i));
                         s += dateFormat.format(date);
                         s += " ";
                         s += timeFormat.format(date);
                     }else if(i == 4) {
                         s += "-";
-                        Date date = new Date(cursor.getInt(i));
+                        Date date = new Date(cursor.getLong(i));
                         s += timeFormat.format(date);
                         s += " ";
                     }else {
@@ -667,13 +667,13 @@ public class DB_Management extends SQLiteOpenHelper {
                 String s = "";
                 for(int i =0; i < 7; i++){
                     if(i == 3){
-                        Date date = new Date(cursor.getInt(i));
+                        Date date = new Date(cursor.getLong(i));
                         s += dateFormat.format(date);
                         s += " ";
                         s += timeFormat.format(date);
                     }else if(i == 4) {
                         s += "-";
-                        Date date = new Date(cursor.getInt(i));
+                        Date date = new Date(cursor.getLong(i));
                         s += timeFormat.format(date);
                         s += " ";
                     }else {

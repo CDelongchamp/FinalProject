@@ -49,7 +49,19 @@ public class SignUpActivity extends AppCompatActivity {
 
                 if(user.equals("") || pass.equals("")) {
                     Toast.makeText(SignUpActivity.this, "Username or Password cannot be blank.", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else if (pass.length()>16) {
+                        Toast.makeText(SignUpActivity.this, "Password is too long.", Toast.LENGTH_SHORT).show();
+
+
+
+                } else if (user.length()>16) {
+                    Toast.makeText(SignUpActivity.this, "Username is too long.", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+                else {
 
 
                     int regResult = myDB.insertNewUser(user,pass,is_instructor,is_member);
@@ -97,6 +109,46 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
+
+    /** This method checks if the user name is valid , meaning only contains alphabets
+     *
+     * @param name takes in the String username anc checks if it is alphabetical
+     * @return a boolean value, if it is true it means our password only contains alphabets if there are numbers or other characters our username is invalid
+     */
+    public static boolean isValidName(String name){
+
+        return name.matches("[a-zA-Z]+");
+    }
+    /** This method checks if the password is valid , meaning it does not contain any space
+     *
+     * @param password takes in the String password and checks if it contains any white space,
+     * @return a boolean value, returning true means that it does not contain white space and can be used as a password
+     */
+    public static boolean isPasswordContainsEmptySpace(String password){
+        return !password.matches(".*\\s+.*");
+    }
+
+
+    public static boolean isPasswordTooLong(String password){
+        boolean testLong = false;
+        if (password.length()<16)
+        {
+            testLong = true;
+        }
+        return testLong;
+    }
+
+    public static boolean isUsernameTooLong(String username){
+        boolean testLong = false;
+        if (username.length()<16)
+        {
+            testLong = true;
+        }
+        return testLong;
+    }
+
 
 }

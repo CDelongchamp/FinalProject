@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,14 +23,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
 public class ScheduleClassActivity extends AppCompatActivity {
 
-    final Calendar myCalendar = Calendar.getInstance();
-    final Calendar startCalendar = Calendar.getInstance();
-    final Calendar endCalendar = Calendar.getInstance();
+    Calendar myCalendar = new GregorianCalendar();
+    Calendar startCalendar = new GregorianCalendar();
+    Calendar endCalendar = new GregorianCalendar();
 
     Button backButton, scheduleClass;
     Spinner fitnessTypeSpinner, difficultySpinner;
@@ -88,7 +90,7 @@ public class ScheduleClassActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         selectStartTimeEdit.setText(sdf.format(startCalendar.getTime()));
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, 0, 0, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select the start time");
                 mTimePicker.show();
             }
@@ -114,7 +116,7 @@ public class ScheduleClassActivity extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                         selectEndTimeEdit.setText(sdf.format(endCalendar.getTime()));
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, 0, 0, true);// Yes 24 hour time
                 mTimePicker.setTitle("Select the end time");
                 mTimePicker.show();
             }
@@ -123,11 +125,20 @@ public class ScheduleClassActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                String myFormat = "dd/MM/yyyy";
+                startCalendar.set(Calendar.YEAR, year);
+                startCalendar.set(Calendar.MONTH, monthOfYear);
+                startCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                endCalendar.set(Calendar.YEAR, year);
+                endCalendar.set(Calendar.MONTH, monthOfYear);
+                endCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                myCalendar.set(Calendar.YEAR,year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+
+                String myFormat = "MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.CANADA);
                 selectDateEdit.setText(sdf.format(myCalendar.getTime()));
             }
@@ -153,22 +164,22 @@ public class ScheduleClassActivity extends AppCompatActivity {
 
                 fitnessType = fitnessTypeSpinner.getSelectedItem().toString();
                 difficulty = difficultySpinner.getSelectedItem().toString();
-                startCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-                startCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
-                endCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
-                endCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
+//                startCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
+//                startCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
+//                endCalendar.set(Calendar.YEAR, myCalendar.get(Calendar.YEAR));
+//                endCalendar.set(Calendar.MONTH, myCalendar.get(Calendar.MONTH));
 
                 boolean isFieldCorrect = true;
                 // incorrect field entry cases
-                if (fitnessType.length() == 0) {
-                    fitnessTypeSpinner.setBackgroundColor(Color.RED);
-                    isFieldCorrect = false;
-                }
-                if (difficulty.length() == 0) {
-                    difficultySpinner.setBackgroundColor(Color.RED);
-                    isFieldCorrect = false;
-
-                }
+//                if (fitnessType.length() == 0) {
+//                    fitnessTypeSpinner.setBackgroundColor(Color.RED);
+//                    isFieldCorrect = false;
+//                }
+//                if (difficulty.length() == 0) {
+//                    difficultySpinner.setBackgroundColor(Color.RED);
+//                    isFieldCorrect = false;
+//
+//                }
                 if (selectDateEdit.getText().length() == 0) {
                     selectDateEdit.setHintTextColor(Color.RED);
                     isFieldCorrect = false;
@@ -188,15 +199,38 @@ public class ScheduleClassActivity extends AppCompatActivity {
                     maximumCapacityNumber.setHintTextColor(Color.RED);
                     isFieldCorrect = false;
                 }
+                if (startCalendar.getTime().getTime() >= endCalendar.getTime().getTime()) {
+                    selectStartTimeEdit.setHintTextColor(Color.RED);
+                    selectEndTimeEdit.setHintTextColor(Color.RED);
+                    isFieldCorrect = false;
 
-                if (isFieldCorrect) {
+                }
+
+                boolean isAlreadyTaught = false;
+                List<String> classesByName = myDB.getAllClassesByClassName(fitnessType);
+                for (String classes : classesByName) {
+                    if (classes.split(" ")[2].split("-")[1].equals(selectDateEdit.getText().toString().split("-")[1])) {
+                        isAlreadyTaught = true;
+                        break;
+                    }
+                }
+
+
+                if (isFieldCorrect && !isAlreadyTaught) {
                     maximumCapacity = Integer.parseInt(maximumCapacityNumber.getText().toString());
                     startTime = startCalendar.getTime().getTime();
                     endTime = endCalendar.getTime().getTime();
                     boolean isCreated = myDB.createClass(fitnessType,difficulty,startTime,endTime,maximumCapacity,username);
                     finish();
                 } else {
-                    Toast.makeText(ScheduleClassActivity.this, "Make sure all of the fields are not empty.", Toast.LENGTH_SHORT).show();
+                    if (!isFieldCorrect){
+                        Toast.makeText(ScheduleClassActivity.this, "Make sure all of the fields are entered correctly.", Toast.LENGTH_SHORT).show();
+                    }
+                    if (isAlreadyTaught) {
+                        Toast.makeText(ScheduleClassActivity.this, "Another instructor is already teaching this class. Change the day or the class.", Toast.LENGTH_SHORT).show();
+                        selectDateEdit.setText("");
+                        selectDateEdit.setHintTextColor(Color.RED);
+                    }
                 }
             }
         });
