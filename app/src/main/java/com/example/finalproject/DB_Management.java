@@ -83,6 +83,7 @@ public class DB_Management extends SQLiteOpenHelper {
 
         myDB.execSQL("INSERT INTO roles(user_id, role_id) VALUES(\"admin\",\"1\")");
 
+
     }
 
     @Override
@@ -163,6 +164,25 @@ public class DB_Management extends SQLiteOpenHelper {
      */
     public Boolean deleteRole(String username, int role_id){
         String query = "DELETE FROM roles WHERE user_id ='" + username + "' AND role_id = " + role_id;
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            cursor.close();
+            return true;
+        }else{
+            cursor.close();
+            return false;
+        }
+    }
+
+    /** Method deletes a record of enrolment in a given class.
+     *
+     * @param username the username of the user to be deleted from enrolment.
+     * @param class_id the class to be unenrolled from.
+     * @return returns true if successful, false otherwise.
+     */
+    public Boolean unenrolUser(String username, int class_id){
+        String query = "DELETE FROM class_enrolment WHERE user_id ='" + username + "' AND class_id = " + class_id;
 
         Cursor cursor = db.rawQuery(query, null);
         if(cursor.moveToFirst()){
@@ -354,6 +374,24 @@ public class DB_Management extends SQLiteOpenHelper {
         return rowsUpdated > 0;
     }
 
+    /**
+     * Method enrols a user into a given class.
+     * @param username the username of the user we want to enrol.
+     * @param class_id the class_id of the class they want to enrol in.
+     * @return returns true if successful.
+     */
+    public Boolean enrolInClass(String username, String class_id){
+
+        ContentValues cv = new ContentValues();
+
+        cv.put("user_id", username);
+        cv.put("class_id", class_id);
+        long rowsUpdated = db.insert("class_enrolment", null, cv);
+
+
+        return rowsUpdated > 0;
+    }
+
     /** Method deletes a class from the class table using the class_id.
      *
      * @param class_id the class_id from the class table to be deleted.
@@ -363,8 +401,10 @@ public class DB_Management extends SQLiteOpenHelper {
 
         String query = "DELETE FROM classes WHERE class_id =" + class_id;
         Cursor cursor = db.rawQuery(query, null);
+        Boolean result = cursor.getCount() <= 0;
 
-        return cursor.getCount() <= 0;
+        cursor.close();
+        return result;
     }
 
     /**
@@ -381,8 +421,8 @@ public class DB_Management extends SQLiteOpenHelper {
     public Boolean updateClass(int class_id, String type, String difficulty, long start_time, long end_time, int capacity, String instructor){
 
         String query = "UPDATE classes" +
-                " SET type = \'" + type + "\', difficulty = \'" + difficulty + "\', start_time = " + start_time + ", end_time = " + end_time + ", capacity = " + capacity + ", instructor = \'" + instructor +
-                "\' WHERE class_id = " + class_id;
+                " SET type = '" + type + "', difficulty = '" + difficulty + "', start_time = " + start_time + ", end_time = " + end_time + ", capacity = " + capacity + ", instructor = '" + instructor +
+                "' WHERE class_id = " + class_id;
         Cursor cursor = db.rawQuery(query, null);
 
         if(cursor.moveToFirst()){
@@ -510,6 +550,68 @@ public class DB_Management extends SQLiteOpenHelper {
         }
         cursor.close();
         return list;
+    }
+
+    /** Method asks the Database for all classes currently enrolled by user.
+     *
+     * @param username the user of the classes we want to see.
+     * @return a list of Strings with the specified classes.
+     */
+    public List<String> getAllClassesByEnrolment(String username){
+
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  class_id FROM class_enrolment WHERE user_id = '" + username + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
+    /**
+     * Method will get a count of the amount of free space left in the given class.
+     * @param class_id the class_id of which we determine free space.
+     * @return the amount of free spaces. 99999999 indicates an error.
+     */
+    public int getFreeSpotsOfClass(String class_id){
+        String selectQuery = "SELECT COUNT(*) FROM class_enrolment WHERE class_id = '" + class_id + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String result = "0";
+        int integerResult = 99999999;
+
+        if (cursor.moveToFirst()) {
+            do {
+                result = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        integerResult = getCapacityOfClass(class_id) - Integer.getInteger(result);
+
+        return integerResult;
+    }
+
+    /**
+     * Method finds the capacity of a given class via it's class_id
+     * @param class_id the class id of the class we want to find the capacity.
+     * @return the capacity of the class.
+     */
+    public int getCapacityOfClass(String class_id){
+        String selectQuery = "SELECT capacity FROM classes WHERE class_id = '" + class_id + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        String result = "-1";
+
+        if (cursor.moveToFirst()) {
+            do {
+                result = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return Integer.getInteger(result);
     }
 
 
