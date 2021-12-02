@@ -29,6 +29,8 @@ import java.util.Locale;
 
 public class InstructorEditClassActivity extends AppCompatActivity {
 
+    // the dates were kept as calendars.
+
     Calendar myCalendar = Calendar.getInstance();
     Calendar startCalendar = new GregorianCalendar();
     Calendar endCalendar = new GregorianCalendar();
@@ -286,7 +288,9 @@ public class InstructorEditClassActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * loads spinner data
+     */
     private void loadSpinnerData() {
 
         myDB = new DB_Management(this );
@@ -321,6 +325,9 @@ public class InstructorEditClassActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * loads spinner data from SQL database
+     */
     private void loadDifficultySpinnerData() {
         List<String> labels = new ArrayList<>();
         labels.add("Beginner");
@@ -336,6 +343,9 @@ public class InstructorEditClassActivity extends AppCompatActivity {
         difficultySpinner.setAdapter(dataAdapter);
     }
 
+    /**
+     * makes an alert pop on the screen to prompt the user
+     */
     private void noClassAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("")

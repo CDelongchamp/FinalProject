@@ -208,6 +208,9 @@ public class ScheduleClassActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * loads spinner data
+     */
     private void loadFitnessSpinnerData() {
         myDB = new DB_Management(this );
         List<String> labels = myDB.getAllClassTypes();
@@ -221,6 +224,9 @@ public class ScheduleClassActivity extends AppCompatActivity {
         fitnessTypeSpinner.setAdapter(dataAdapter);
     }
 
+    /**
+     * loads spinner data
+     */
     private void loadDifficultySpinnerData() {
         List<String> labels = new ArrayList<>();
         labels.add("Beginner");

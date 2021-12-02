@@ -44,6 +44,9 @@ public class RemoveClassTypeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * deletes the selected class type from the SQL database
+     */
     public void deleteClassType(){
         String class_type = classTypeDeleteSpinner.getSelectedItem().toString();
 
@@ -57,6 +60,9 @@ public class RemoveClassTypeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * loads spinner data from SQL database
+     */
     private void loadSpinnerData() {
 
         myDB = new DB_Management(this );

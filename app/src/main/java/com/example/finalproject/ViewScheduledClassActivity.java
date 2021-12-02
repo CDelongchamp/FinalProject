@@ -155,6 +155,9 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * loads spinner data
+     */
     private void loadClassTypeSpinnerData() {
         myDB = new DB_Management(this );
         List<String> labels = myDB.getAllClassTypes();
@@ -170,6 +173,9 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
         classTypeSpinner.setAdapter(dataAdapter);
     }
 
+    /**
+     * loads spinner data
+     */
     private void loadInstructorSpinnerData() {
         myDB = new DB_Management(this );
         List<String> labels = myDB.getAllInstructors();

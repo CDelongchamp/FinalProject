@@ -82,6 +82,12 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * getter for the role of the user
+     * @return boolean variable:
+     * returns true if user selects member
+     * returns false if user selects instructor
+     */
     public static boolean getRole() {
         return finalRole;
     }

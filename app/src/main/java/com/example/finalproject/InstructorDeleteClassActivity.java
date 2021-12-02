@@ -49,6 +49,10 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * cancels a class and creates toast indicating if the class
+     * was successfully or unsuccessfully cancelled
+     */
     public void cancelClass() {
         int classID = Integer.parseInt(classSpinner.getSelectedItem().toString().split(" ")[1]);
 
@@ -62,6 +66,9 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * loads spinner data
+     */
     private void loadSpinnerData() {
 
         myDB = new DB_Management(this );
@@ -94,6 +101,9 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * makes an alert pop on the screen to prompt the user
+     */
     private void noClassAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("")
@@ -114,6 +124,9 @@ public class InstructorDeleteClassActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * makes an alert pop on the screen to prompt the user
+     */
     private void areYouSureAlert() {
         String[] temp = classSpinner.getSelectedItem().toString().split(" ");
         String msg = ("ID: "+temp[1]+" "+temp[2]+" "+temp[3]);
