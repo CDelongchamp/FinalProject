@@ -45,11 +45,12 @@ public class AddClassActivity extends AppCompatActivity {
                     classDescription.setHintTextColor(Color.RED);
                     return;
                 } else if (type.length() == 0) {
-                    Toast.makeText(AddClassActivity.this, "Please enter a name.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddClassActivity.this, "Please enter a valid name.", Toast.LENGTH_SHORT).show();
                     classType.setHintTextColor(Color.RED);
                     return;
                 } else if (type.contains(" ")) {
                     Toast.makeText(AddClassActivity.this, "Please make sure there are no spaces in the name.", Toast.LENGTH_SHORT).show();
+                    classType.setText("");
                     classType.setHintTextColor(Color.RED);
                     return;
                 }
