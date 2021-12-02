@@ -614,6 +614,29 @@ public class DB_Management extends SQLiteOpenHelper {
         return Integer.getInteger(result);
     }
 
+    public Date[] getClassTimeByClassId(String class_id) {
+        Date[] times = new Date[2];
+        String selectQuery = "SELECT * FROM classes WHERE class_id = '" + class_id + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                for (int i = 1; i < 5; i++) {
+                    if (i == 3) {
+                        Date startTime = new Date(cursor.getLong(i));
+                        times[0] = startTime;
+
+                    } else if (i == 4) {
+                        Date endTime = new Date(cursor.getLong(i));
+                        times[1] = endTime;
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return times;
+    }
+
     public String getClassByClassId(String class_id) {
         StringBuilder info = new StringBuilder();
         String selectQuery = "SELECT * FROM classes WHERE class_id = '" + class_id + "'";
