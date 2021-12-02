@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject">
         <activity
+            android:name=".InstructorViewMembersActivity"
+            android:exported="true" />
+        <activity
             android:name=".MemberSearchClassesActivity"
             android:exported="true" />
         <activity

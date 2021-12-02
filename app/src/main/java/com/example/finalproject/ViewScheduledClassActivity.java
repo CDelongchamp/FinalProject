@@ -53,7 +53,7 @@ public class ViewScheduledClassActivity extends AppCompatActivity {
         classTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(position != 0){
+                if(position != 0) {
                     instructorSpinner.setSelection(0);
                     Object item = parentView.getItemAtPosition(position);
                     data.clear();
