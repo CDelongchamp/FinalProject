@@ -63,6 +63,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * getter for the user's username
+     * @return String of the user's full username
+     */
     public static String getUser() {
         return user;
     }

@@ -131,7 +131,11 @@ public class SignUpActivity extends AppCompatActivity {
         return !password.matches(".*\\s+.*");
     }
 
-
+    /**
+     * checks if the password is too long
+     * @param password
+     * @return true if password is not too long, else false
+     */
     public static boolean isPasswordTooLong(String password){
         boolean testLong = false;
         if (password.length()<16)
@@ -141,6 +145,11 @@ public class SignUpActivity extends AppCompatActivity {
         return testLong;
     }
 
+    /**
+     * checks if the username is too long
+     * @param username
+     * @return true if username is not too long, else false
+     */
     public static boolean isUsernameTooLong(String username){
         boolean testLong = false;
         if (username.length()<16)

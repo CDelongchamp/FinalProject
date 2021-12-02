@@ -111,7 +111,9 @@ public class EditClassActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * loads spinner data from the SQL database
+     */
     private void loadSpinnerData() {
         List<String> labels = myDB.getAllClassTypes();
         labels.add(0,"");

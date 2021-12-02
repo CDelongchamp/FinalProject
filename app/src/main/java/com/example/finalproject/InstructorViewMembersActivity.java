@@ -95,6 +95,13 @@ public class InstructorViewMembersActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * gets all users from a class id
+     * @param selectedClassId ID of the class selected by the user
+     * @return list of strings of the usernames of the users that
+     * are enrolled in the class represented by the class ID
+     * passed on.
+     */
     private List<String> getUsers(String selectedClassId) {
 //        String selectedClassId = classSpinner.getSelectedItem().toString().split(" ")[1];
 
@@ -103,6 +110,10 @@ public class InstructorViewMembersActivity extends AppCompatActivity {
         return allUsersInClass;
     }
 
+    /**
+     * initializes the recyclerViewAdapter
+     *
+     */
     public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
         private List<String> mData;
@@ -146,7 +157,9 @@ public class InstructorViewMembersActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * loads spinner data from the SQL database
+     */
     private void loadClassSpinnerData() {
         myDB = new DB_Management(this );
         List<String> tempLabels = myDB.getAllClassesByInstructorName(username);

@@ -64,6 +64,9 @@ public class MemberViewClassesActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *  lol
+     */
     private void processComment() {
         // we don't care about their comments B)
 
@@ -72,6 +75,9 @@ public class MemberViewClassesActivity extends AppCompatActivity {
         commentEdit.setText(comment);
     }
 
+    /**
+     * makes an alert pop on the screen to prompt the user
+     */
     private void areYouSureAlert() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -96,6 +102,9 @@ public class MemberViewClassesActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * makes an alert pop on the screen to prompt the user
+     */
     private void noClassAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("")
@@ -116,6 +125,9 @@ public class MemberViewClassesActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * loads spinner data from SQL database
+     */
     private void loadEnrolledClassSpinnerData() {
 
         List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);

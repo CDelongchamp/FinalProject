@@ -46,6 +46,9 @@ public class RemoveUserActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * deletes the selected user
+     */
     public void deleteUser(){
         String username = spinner.getSelectedItem().toString();
 

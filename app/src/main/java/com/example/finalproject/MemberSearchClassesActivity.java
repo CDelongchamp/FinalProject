@@ -59,10 +59,20 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * checks if the capacity of a class has been reached
+     * @return true if the class is full, else false
+     */
     private boolean checkCapacity() {
         return myDB.getFreeSpotsOfClass(classId) <= 0;
     }
 
+    /**
+     * checks if there is a time conflict with another class that
+     * the user is enrolled in
+     * @return true if there is a time conflict with another class,
+     * else false
+     */
     private boolean checkTimeConflict() {
         Date[] selectedClassTimes = myDB.getClassTimeByClassId(classId);
         List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);

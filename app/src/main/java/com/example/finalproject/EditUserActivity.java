@@ -95,7 +95,7 @@ public class EditUserActivity extends AppCompatActivity {
 
 
     /**
-     * Function to load the spinner data from SQLite database
+     * loads spinner data from SQLite database
      * */
     private void loadSpinnerData() {
         myDB = new DB_Management(this );

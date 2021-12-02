@@ -497,6 +497,10 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /**
+     * gets a list of all class types.
+     * @return returns a list of strings with all class types.
+     */
     public List<String> getAllClassTypes() {
 
         List<String> list = new ArrayList<String>();
@@ -614,6 +618,13 @@ public class DB_Management extends SQLiteOpenHelper {
         return Integer.getInteger(result);
     }
 
+    /**
+     * gets the start time and end time of a given class via it's class_id
+     * @param class_id the class id of the class we want to find the start
+     *                 time and end time.
+     * @return returns the start time and end time of the class. index 0 for
+     * the start time and index 1 for the end time.
+     */
     public Date[] getClassTimeByClassId(String class_id) {
         Date[] times = new Date[2];
         String selectQuery = "SELECT * FROM classes WHERE class_id = '" + class_id + "'";
@@ -637,6 +648,13 @@ public class DB_Management extends SQLiteOpenHelper {
         return times;
     }
 
+    /**
+     * gets all the users that are in a given class via it's class id.
+     * @param class_id the id of the class we want to find the users
+     *                 of.
+     * @return returns a list of all the user's usernames who are
+     * in the class.
+     */
     public List<String> getAllUsersByClassId(String class_id) {
         List<String> allUsers = this.getAllUsers();
         List<String> allUsersInClass = new ArrayList<>();
@@ -655,6 +673,18 @@ public class DB_Management extends SQLiteOpenHelper {
         return allUsersInClass;
     }
 
+    /**
+     * gets class info including:
+     * type,
+     * difficulty,
+     * start time,
+     * end time,
+     * capacity and
+     * instructor via a given class_id
+     * @param class_id the id of the class which we need info on.
+     * @return a concatonated string of all of the variables listed
+     * above, separated by spaces.
+     */
     public String getClassByClassId(String class_id) {
         StringBuilder info = new StringBuilder();
         String selectQuery = "SELECT * FROM classes WHERE class_id = '" + class_id + "'";
