@@ -380,7 +380,7 @@ public class DB_Management extends SQLiteOpenHelper {
      * @param class_id the class_id of the class they want to enrol in.
      * @return returns true if successful.
      */
-    public Boolean enrolInClass(String username, String class_id){
+    public Boolean enrollInClass(String username, String class_id){
 
         ContentValues cv = new ContentValues();
 
@@ -614,7 +614,36 @@ public class DB_Management extends SQLiteOpenHelper {
         return Integer.getInteger(result);
     }
 
+    public String getClassByClassId(String class_id) {
+        StringBuilder info = new StringBuilder();
+        String selectQuery = "SELECT * FROM classes WHERE class_id = '" + class_id + "'";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
+        if (cursor.moveToFirst()) {
+            do {
+                for (int i = 1; i < 7; i++) {
+                    if (i == 3) {
+                        Date date = new Date(cursor.getLong(i));
+                        info.append(dateFormat.format(date));
+                        info.append(" ");
+                        info.append(timeFormat.format(date));
+                    } else if (i == 4) {
+                        info.append("-");
+                        Date date = new Date(cursor.getLong(i));
+                        info.append(timeFormat.format(date));
+                        info.append(" ");
+                    } else {
+                        info.append(cursor.getString(i));
+                        info.append(" ");
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return info.toString();
+    }
 
     /** Method retrieves a list of classes that have the appropriate class name.
      *
