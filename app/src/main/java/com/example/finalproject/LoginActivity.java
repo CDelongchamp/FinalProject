@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.btn_register);
 
         myDB = new DB_Management(this);
+
+        //TODO remove before submission
+        testing();
 
         Login2Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +73,17 @@ public class LoginActivity extends AppCompatActivity {
      */
     public static String getUser() {
         return user;
+    }
+
+    /**
+     * for quick testing and debugging, allows faster access
+     * to app.
+     * sets username to admin
+     * sets password to admin123
+     */
+    public void testing() {
+        username.setText("admin");
+        password.setText("admin123");
     }
 
 }
