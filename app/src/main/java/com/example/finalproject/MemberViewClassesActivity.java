@@ -26,6 +26,7 @@ public class MemberViewClassesActivity extends AppCompatActivity {
 //    List<String> data;
     Spinner enrolledClassSpinner;
     EditText commentEdit;
+    Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class MemberViewClassesActivity extends AppCompatActivity {
         unenrollButton = findViewById(R.id.unenrollButton);
         enrolledClassSpinner = findViewById(R.id.enrolledClassSpinner);
         commentEdit = findViewById(R.id.classCommentEditText);
+        backButton = findViewById(R.id.backButton99);
 
         username = LoginActivity.getUser();
         loadEnrolledClassSpinnerData();
@@ -45,6 +47,13 @@ public class MemberViewClassesActivity extends AppCompatActivity {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        adapter = new MyRecyclerViewAdapter(this, data);
 //        recyclerView.setAdapter(adapter);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         unenrollButton.setOnClickListener(new View.OnClickListener() {
             @Override

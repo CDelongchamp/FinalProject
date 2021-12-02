@@ -16,7 +16,9 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
 
     DB_Management myDB;
     Button enrollButton;
-    String username, classId;
+    String username;
+    String classId;
+    Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,15 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
 
         myDB = new DB_Management(this);
         enrollButton = findViewById(R.id.enrollButton);
+        backButton = findViewById(R.id.backButton512);
         username = LoginActivity.getUser();
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override

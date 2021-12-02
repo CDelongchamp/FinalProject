@@ -637,6 +637,24 @@ public class DB_Management extends SQLiteOpenHelper {
         return times;
     }
 
+    public List<String> getAllUsersByClassId(String class_id) {
+        List<String> allUsers = this.getAllUsers();
+        List<String> allUsersInClass = new ArrayList<>();
+
+        for (String username : allUsers) {
+
+            List<String> userClasses = this.getAllClassesByEnrolment(username);
+            for (String enrolledClass : userClasses) {
+
+                if (enrolledClass.equals(class_id)) {
+                    allUsersInClass.add(username);
+                }
+            }
+        }
+
+        return allUsersInClass;
+    }
+
     public String getClassByClassId(String class_id) {
         StringBuilder info = new StringBuilder();
         String selectQuery = "SELECT * FROM classes WHERE class_id = '" + class_id + "'";
