@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO remove before submission
         testing();
+        createTestAccount();
 
         Login2Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +85,13 @@ public class LoginActivity extends AppCompatActivity {
     public void testing() {
         username.setText("admin");
         password.setText("admin123");
+    }
+
+    /**
+     * creates member user zor with password 1234
+     */
+    public void createTestAccount() {
+        myDB.insertNewUser("zor","1234",true,true);
     }
 
 }

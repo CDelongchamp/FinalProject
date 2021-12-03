@@ -83,6 +83,10 @@ public class DB_Management extends SQLiteOpenHelper {
 
         myDB.execSQL("INSERT INTO roles(user_id, role_id) VALUES(\"admin\",\"1\")");
 
+//        myDB.execSQL("INSERT INTO users(username, password) VALUES(\"zor\", \"1234\")");
+//
+//        myDB.execSQL("INSERT INTO roles(user_id, role_id) VALUES(\"zor\",\"3\")");
+
 
     }
 
