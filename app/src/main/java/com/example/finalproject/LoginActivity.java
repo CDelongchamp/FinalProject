@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO remove before submission
         testing();
-        createTestAccount();
+//        createTestAccount();
 
         Login2Button.setOnClickListener(new View.OnClickListener() {
             @Override

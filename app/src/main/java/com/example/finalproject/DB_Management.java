@@ -83,9 +83,9 @@ public class DB_Management extends SQLiteOpenHelper {
 
         myDB.execSQL("INSERT INTO roles(user_id, role_id) VALUES(\"admin\",\"1\")");
 
-//        myDB.execSQL("INSERT INTO users(username, password) VALUES(\"zor\", \"1234\")");
-//
-//        myDB.execSQL("INSERT INTO roles(user_id, role_id) VALUES(\"zor\",\"3\")");
+        myDB.execSQL("INSERT INTO users(username, password) VALUES(\"zor\", \"1234\")");
+
+        myDB.execSQL("INSERT INTO roles(user_id, role_id) VALUES(\"zor\",\"3\")");
 
 
     }
@@ -560,6 +560,45 @@ public class DB_Management extends SQLiteOpenHelper {
         return list;
     }
 
+    /** Method returns a list of schedules classes WITH THE CLASS ID.
+     *
+     * @return returns a list of space separated elements of the classes and their info.
+     */
+    public List<String> getAllScheduledClassesWithID(){
+
+        List<String> list = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM classes";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+
+        if (cursor.moveToFirst()) {
+            do {
+                String s = "";
+                for(int i =0; i < 7; i++){
+                    if(i == 3){
+                        Date date = new Date(cursor.getLong(i));
+                        s += dateFormat.format(date);
+                        s += " ";
+                        s += timeFormat.format(date);
+                    }else if(i == 4) {
+                        s += "-";
+                        Date date = new Date(cursor.getLong(i));
+                        s += timeFormat.format(date);
+                        s += " ";
+                    }else {
+                        s += cursor.getString(i);
+                        s+= " ";
+                    }
+                }
+                list.add(s);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return list;
+    }
+
     /** Method asks the Database for all classes currently enrolled by user.
      *
      * @param username the user of the classes we want to see.
@@ -819,5 +858,26 @@ public class DB_Management extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
+
+    /** Method returns a list of all the classes and their descriptions.
+     *
+     * @return returns a list of all class Descriptions.
+     */
+    public String getClassDescriptionByClassType(String classType) {
+        String s = "";
+        String selectQuery = "SELECT  * FROM class_types";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(0).equals(classType)) {
+                    s = cursor.getString(1);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return s;
+    }
+
 
 }
