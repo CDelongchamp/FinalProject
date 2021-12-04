@@ -38,19 +38,22 @@
         android:id="@+id/unenrollButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
         android:text="Unenroll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="553dp" />
+        app:layout_constraintTop_toBottomOf="@+id/classCommentEditText" />
 
     <Button
         android:id="@+id/backButton99"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="Go back"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="626dp" />
+        app:layout_constraintTop_toBottomOf="@+id/unenrollButton" />
 
     <TextView
         android:id="@+id/textView17"
