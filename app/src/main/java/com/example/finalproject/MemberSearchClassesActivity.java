@@ -66,7 +66,9 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (selectDateEdit.getText().toString().length() == 0) {
 
+                }
                 loadClassSpinnerDataFromDate();
             }
         });
@@ -134,21 +136,6 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
     }
 
     /**
-     * getter for all enrolled classes by user
-     * @return list of all classes enrolled in
-     */
-    private List<String> getEnrolledClasses() {
-        List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);
-        List<String> allClasses = myDB.getAllScheduledClasses();
-        List<String> list = new ArrayList<>();
-
-        for (String s : enrolledClasses) {
-            list.add(s+" "+myDB.getClassByClassId(s));
-        }
-        return list;
-    }
-
-    /**
      * gets the id of the selected class
      * @return String of the class id selected
      */
@@ -179,8 +166,6 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         Date[] selectedClassTimes = myDB.getClassTimeByClassId(classId);
         List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);
         List<Date[]> enrolledClassesTimes = new ArrayList<>();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
-//        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         for (String enrolledClassId : enrolledClasses) {
             enrolledClassesTimes.add(myDB.getClassTimeByClassId(enrolledClassId));
@@ -193,11 +178,20 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
             Date enrolledStartTime = enrolledTimes[0];
             Date enrolledEndTime = enrolledTimes[1];
 
+            boolean enStartBeforeSelEnd = false;
+            boolean selStartBeforeEnEnd = false;
+
             // a.start <= b.end
-            boolean enStartBeforeSelEnd = enrolledStartTime.compareTo(selectedEndTime) <= 0;
+            if (enrolledStartTime != null && selectedEndTime != null) {
+                enStartBeforeSelEnd = enrolledStartTime.compareTo(selectedEndTime) <= 0;
+            }
 
             // b.start <= a.end
-            boolean selStartBeforeEnEnd = selectedStartTime.compareTo(enrolledEndTime) <= 0;
+            if (enrolledEndTime != null && selectedStartTime != null) {
+                selStartBeforeEnEnd = selectedStartTime.compareTo(enrolledEndTime) <= 0;
+            }
+
+
             if (enStartBeforeSelEnd && selStartBeforeEnEnd) {
                 return true;
             }
@@ -206,6 +200,9 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * loads class spinner data from SQL database
+     */
     private void loadClassSpinnerData() {
 
         List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
@@ -213,6 +210,8 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         List<String> labels = new ArrayList<>();
 
         for (String classInfo : scheduledClasses) {
+
+            // check if already enrolled in
             if (!enrolledClasses.contains(classInfo.split(" ")[0])) {
                 labels.add(classInfo);
             }
@@ -228,6 +227,9 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         classSpinner.setAdapter(dataAdapter);
     }
 
+    /**
+     * loads class spinner data from SQL database and from date chosen by user
+     */
     private void loadClassSpinnerDataFromDate() {
 
         List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
@@ -236,7 +238,11 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         String date = selectDateEdit.getText().toString();
 
         for (String classInfo : scheduledClasses) {
+
+            // check date
             if (classInfo.split(" ")[3].equals(date)) {
+
+                // check if already enrolled in
                 if (!enrolledClasses.contains(classInfo.split(" ")[0])) {
                     labels.add(classInfo);
                 }

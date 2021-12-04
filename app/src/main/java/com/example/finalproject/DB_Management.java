@@ -387,11 +387,11 @@ public class DB_Management extends SQLiteOpenHelper {
     public Boolean enrollInClass(String username, String class_id){
 
         ContentValues cv = new ContentValues();
+        int capacity = 0;
 
         cv.put("user_id", username);
         cv.put("class_id", class_id);
         long rowsUpdated = db.insert("class_enrolment", null, cv);
-
 
         return rowsUpdated > 0;
     }
@@ -627,7 +627,7 @@ public class DB_Management extends SQLiteOpenHelper {
     public int getFreeSpotsOfClass(String class_id){
         String selectQuery = "SELECT COUNT(*) FROM class_enrolment WHERE class_id = '" + class_id + "'";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        String result = "0";
+        String result = "-1";
         int integerResult = 99999999;
 
         if (cursor.moveToFirst()) {
@@ -637,7 +637,7 @@ public class DB_Management extends SQLiteOpenHelper {
         }
         cursor.close();
 
-        integerResult = getCapacityOfClass(class_id) - Integer.getInteger(result);
+        integerResult = getCapacityOfClass(class_id) - Integer.parseInt(result);
 
         return integerResult;
     }
@@ -658,7 +658,7 @@ public class DB_Management extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return Integer.getInteger(result);
+        return Integer.parseInt(result);
     }
 
     /**
