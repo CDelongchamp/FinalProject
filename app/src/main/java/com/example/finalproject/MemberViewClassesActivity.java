@@ -19,11 +19,8 @@ import java.util.List;
 public class MemberViewClassesActivity extends AppCompatActivity {
 
     DB_Management myDB;
-//    RecyclerView recyclerView;
-//    MyRecyclerViewAdapter adapter;
     Button unenrollButton;
     String username;
-//    List<String> data;
     Spinner enrolledClassSpinner;
     EditText commentEdit;
     Button backButton;
@@ -34,7 +31,6 @@ public class MemberViewClassesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_member_view_classes);
 
         myDB = new DB_Management(this);
-//        recyclerView = findViewById(R.id.recyclerClassView);
         unenrollButton = findViewById(R.id.unenrollButton);
         enrolledClassSpinner = findViewById(R.id.enrolledClassSpinner);
         commentEdit = findViewById(R.id.classCommentEditText);
@@ -42,11 +38,6 @@ public class MemberViewClassesActivity extends AppCompatActivity {
 
         username = LoginActivity.getUser();
         loadEnrolledClassSpinnerData();
-
-//        RecyclerView recyclerView = findViewById(R.id.recyclerClassView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        adapter = new MyRecyclerViewAdapter(this, data);
-//        recyclerView.setAdapter(adapter);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,46 +148,4 @@ public class MemberViewClassesActivity extends AppCompatActivity {
         enrolledClassSpinner.setAdapter(dataAdapter);
     }
 
-//    public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-//
-//        private List<String> mData;
-//        private LayoutInflater mInflater;
-//
-//        // data is passed into the constructor
-//        MyRecyclerViewAdapter(Context context, List<String> data) {
-//            this.mInflater = LayoutInflater.from(context);
-//            this.mData = data;
-//        }
-//
-//        // inflates the row layout from xml when needed
-//        @Override
-//        public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            view = mInflater.inflate(R.layout.class_recycler_view_row, parent, false);
-//            return new MyRecyclerViewAdapter.ViewHolder(view);
-//        }
-//
-//        // binds the data to the TextView in each row
-//        public void onBindViewHolder(MyRecyclerViewAdapter.ViewHolder holder, int position) {
-//            String s = mData.get(position);
-//            holder.myTextView.setText(s);
-//        }
-//
-//        // total number of rows
-//        @Override
-//        public int getItemCount() {
-//            return mData.size();
-//        }
-//
-//        // stores and recycles views as they are scrolled off screen
-//        public class ViewHolder extends RecyclerView.ViewHolder {
-//            TextView myTextView;
-//
-//            ViewHolder(View itemView) {
-//                super(itemView);
-//                myTextView = itemView.findViewById(R.id.classType);
-//
-//            }
-//        }
-//
-//    }
 }

@@ -38,6 +38,7 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
     String[] classInfo;
     TextView classDescriptionText;
     EditText selectDateEdit;
+    EditText selectClassName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +53,9 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         classSpinner = findViewById(R.id.searchClassSpinner);
         classDescriptionText = findViewById(R.id.classDescriptionText);
         selectDateEdit = findViewById(R.id.selectDateEdit3);
+        selectClassName = findViewById(R.id.usernameLogin2);
 
         classInfo = new String[7];
-
-//        List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
-//        if (scheduledClasses.isEmpty()) {
-//            noClassAlert();
-//        }
 
         loadClassSpinnerData();
         classInfo = classSpinner.getSelectedItem().toString().split(" ");
@@ -75,9 +72,18 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (selectDateEdit.getText().toString().length() == 0) {
-
+                    if (selectClassName.getText().toString().length() == 0) {
+                        Toast.makeText(MemberSearchClassesActivity.this,"enter fields correctly.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        loadClassSpinnerDataByClassName();
+                        selectClassName.setText("");
+                        selectDateEdit.setText("");
+                    }
+                } else {
+                    loadClassSpinnerDataFromDate();
+                    selectClassName.setText("");
+                    selectDateEdit.setText("");
                 }
-                loadClassSpinnerDataFromDate();
             }
         });
 
@@ -216,11 +222,6 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);
         List<String> labels = new ArrayList<>();
 
-//        if (scheduledClasses.isEmpty()) {
-//            noClassAlert();
-//            return;
-//        }
-
         for (String classInfo : scheduledClasses) {
 
             // check if already enrolled in
@@ -249,11 +250,6 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         List<String> labels = new ArrayList<>();
         String date = selectDateEdit.getText().toString();
 
-//        if (scheduledClasses.isEmpty()) {
-//            noClassAlert();
-//            return;
-//        }
-
         for (String classInfo : scheduledClasses) {
 
             // check date
@@ -275,11 +271,34 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         classSpinner.setAdapter(dataAdapter);
     }
 
-//    /**
-//     * makes an alert pop on the screen to prompt the user
-//     */
-//    private void noClassAlert() {
-//        Toast.makeText(MemberSearchClassesActivity.this,"No classes are available", Toast.LENGTH_SHORT).show();
-//        finish();
-//    }
+    /**
+     * loads class spinner data from SQL database
+     */
+    private void loadClassSpinnerDataByClassName() {
+
+        String className = selectClassName.getText().toString();
+        List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
+        List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);
+        List<String> labels = new ArrayList<>();
+
+        for (String classInfo : scheduledClasses) {
+
+            if (classInfo.split(" ")[1].equals(className)) {
+                // check if already enrolled in
+                if (!enrolledClasses.contains(classInfo.split(" ")[0])) {
+                    labels.add(classInfo);
+                }
+            }
+        }
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to sinner
+        classSpinner.setAdapter(dataAdapter);
+    }
+
 }
