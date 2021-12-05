@@ -16,7 +16,6 @@ public class MemberActivity extends AppCompatActivity {
 
     DB_Management myDB;
     String username;
-//    String[] role;
     String role;
     Button viewCurrentClassesButton , searchAllClassesButton;
 
@@ -30,7 +29,6 @@ public class MemberActivity extends AppCompatActivity {
         username = LoginActivity.getUser();
         viewCurrentClassesButton = findViewById(R.id.viewCurrentClassesButton);
         searchAllClassesButton = findViewById(R.id.SearchAllClassesButton);
-//        role = myDB.getUserRoles(username);
 
         if (HomeActivity.getRole()) {
             role = "member";
@@ -41,7 +39,6 @@ public class MemberActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.welcomeMessage);
         textView.setText("Welcome " + username + "! You are logged in as " + role + ".");
 
-//        Toast.makeText(MemberActivity.this, role[0], Toast.LENGTH_SHORT).show();
 
         viewCurrentClassesButton.setOnClickListener(new View.OnClickListener() {
             @Override
