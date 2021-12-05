@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MemberActivity extends AppCompatActivity {
 
@@ -51,8 +54,13 @@ public class MemberActivity extends AppCompatActivity {
         searchAllClassesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MemberSearchClassesActivity.class);
-                startActivity(intent);
+                List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
+                if (!scheduledClasses.isEmpty()) {
+                    Intent intent = new Intent(getApplicationContext(),MemberSearchClassesActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MemberActivity.this,"No classes are available", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

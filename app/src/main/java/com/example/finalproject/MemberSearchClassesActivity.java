@@ -55,10 +55,10 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
 
         classInfo = new String[7];
 
-        List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
-        if (scheduledClasses.isEmpty()) {
-            noClassAlert();
-        }
+//        List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
+//        if (scheduledClasses.isEmpty()) {
+//            noClassAlert();
+//        }
 
         loadClassSpinnerData();
         classInfo = classSpinner.getSelectedItem().toString().split(" ");
@@ -216,10 +216,10 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);
         List<String> labels = new ArrayList<>();
 
-        if (scheduledClasses.isEmpty()) {
-            noClassAlert();
-            return;
-        }
+//        if (scheduledClasses.isEmpty()) {
+//            noClassAlert();
+//            return;
+//        }
 
         for (String classInfo : scheduledClasses) {
 
@@ -249,10 +249,10 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         List<String> labels = new ArrayList<>();
         String date = selectDateEdit.getText().toString();
 
-        if (scheduledClasses.isEmpty()) {
-            noClassAlert();
-            return;
-        }
+//        if (scheduledClasses.isEmpty()) {
+//            noClassAlert();
+//            return;
+//        }
 
         for (String classInfo : scheduledClasses) {
 
@@ -275,11 +275,11 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         classSpinner.setAdapter(dataAdapter);
     }
 
-    /**
-     * makes an alert pop on the screen to prompt the user
-     */
-    private void noClassAlert() {
-        Toast.makeText(MemberSearchClassesActivity.this,"No classes are available", Toast.LENGTH_SHORT).show();
-        finish();
-    }
+//    /**
+//     * makes an alert pop on the screen to prompt the user
+//     */
+//    private void noClassAlert() {
+//        Toast.makeText(MemberSearchClassesActivity.this,"No classes are available", Toast.LENGTH_SHORT).show();
+//        finish();
+//    }
 }
