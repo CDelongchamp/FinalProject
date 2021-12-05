@@ -36,71 +36,72 @@ public class MemberLoginTests {
     public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
-    /** In this  test #1 we are going to test the Member login functionality and also testing the UI components for the member Activity page, here specifically checking the welcome message.
+    /** In this  test #1 we are going to test the Member login functionality. here we are testing that this member only has access to the member button and not the instructor or the admin button.
      *
      */
-    public void memberLoginTests() {
+    public void testMemberLoginAccess() {
+
         ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.usernameLogin), withText("admin"),
+                allOf(withId(R.id.usernameLogin),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatEditText.perform(click());
+        appCompatEditText.perform(replaceText("zor"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.usernameLogin), withText("admin"),
+                allOf(withId(R.id.passwordLogin),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatEditText2.perform(replaceText("1234"), closeSoftKeyboard());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.btn_login), withText("Login"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction button = onView(
+                allOf(withId(R.id.selectMember), withText("ENTER AS MEMBER"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        button.check(matches(isDisplayed()));
+    }
+
+    @Test
+    /** In this test #2 we are testing that,  going from the first page to the second page where we have the member welcome message, as our member has username zor it should say Welcome zor logged in as member
+     */
+    public void testMemberWelcomeMessage() {
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.usernameLogin),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatEditText2.perform(replaceText("zor"));
+        appCompatEditText.perform(replaceText("zor"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.usernameLogin), withText("zor"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatEditText3.perform(closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.passwordLogin), withText("admin123"),
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.passwordLogin),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatEditText4.perform(replaceText("1234"));
-
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.passwordLogin), withText("1234"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatEditText5.perform(closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText6 = onView(
-                allOf(withId(R.id.passwordLogin), withText("1234"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatEditText6.perform(click());
-
-
+        appCompatEditText2.perform(replaceText("1234"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.btn_login), withText("Login"),
@@ -126,63 +127,148 @@ public class MemberLoginTests {
                 allOf(withId(R.id.welcomeMessage), withText("Welcome zor! You are logged in as member."),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView.check(matches(withText("Welcome zor! You are logged in as member.")));
+        textView.check(matches(isDisplayed()));
+
+
+
+
+    }
+    // TODO: make 3 more test as follows:
+    // #3 correct UI components is displayed for the search for classes tab.
+    // #4 member enrolls in a class and correct message is displayed.
+    // #5 member then checks if the class is showing in the enrolled class tab.
+
+    @Test
+    /** Test #3 testing the view current classes button is loaded on the screen.
+     *
+     */
+    public void memberActivityTest3() {
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.usernameLogin),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        appCompatEditText.perform(replaceText("zor"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.passwordLogin),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        appCompatEditText2.perform(replaceText("1234"), closeSoftKeyboard());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.btn_login), withText("Login"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.selectMember), withText("Enter as Member"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                4),
+                        isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction button = onView(
+                allOf(withId(R.id.viewCurrentClassesButton), withText("VIEW CURRENT CLASSES"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        button.check(matches(isDisplayed()));
+
     }
 
     @Test
-    /** In this test #2 we are testing the search enrolled classes for member, whether the correct UI components are displayed, however since we are enrolled in 0 classes we are checking whether the correct Toast box with message is displayed indicating the user is not enrolled currently.
+    /** Testing the search new classes button loads up in member page.
      *
      */
-    public void memberActivityTest2() {
+    public void memberActivityTest4() {
+
         ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.usernameLogin), withText("admin"),
+                allOf(withId(R.id.usernameLogin),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatEditText.perform(click());
+        appCompatEditText.perform(replaceText("zor"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.usernameLogin), withText("admin"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatEditText2.perform(replaceText("zor"));
-
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.usernameLogin), withText("zor"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatEditText3.perform(closeSoftKeyboard());
-
-        ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.passwordLogin), withText("admin123"),
+                allOf(withId(R.id.passwordLogin),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatEditText4.perform(replaceText("1234"));
+        appCompatEditText2.perform(replaceText("1234"), closeSoftKeyboard());
 
-        ViewInteraction appCompatEditText5 = onView(
-                allOf(withId(R.id.passwordLogin), withText("1234"),
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.btn_login), withText("Login"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                2),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.selectMember), withText("Enter as Member"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                4),
+                        isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction button = onView(
+                allOf(withId(R.id.SearchAllClassesButton), withText("SEARCH NEW CLASSES"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        button.check(matches(isDisplayed()));
+    }
+
+    @Test
+    /** view enrolled button functionality, check if it goes to that page and correct UI components load up(pop message, enroll in class button , go back button). since our member has 0 enrolled classes it should popup message saying 0 enrolled classes.
+     *
+     */
+    public void memberActivityTest5() {
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.usernameLogin),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        appCompatEditText.perform(replaceText("zor"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.passwordLogin),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
                                 1),
                         isDisplayed()));
-        appCompatEditText5.perform(closeSoftKeyboard());
+        appCompatEditText2.perform(replaceText("1234"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.btn_login), withText("Login"),
@@ -232,11 +318,23 @@ public class MemberLoginTests {
                         withParent(withParent(withId(R.id.buttonPanel))),
                         isDisplayed()));
         button2.check(matches(isDisplayed()));
+
+        ViewInteraction button3 = onView(
+                allOf(withId(android.R.id.button1), withText("GO BACK"),
+                        withParent(withParent(withId(R.id.buttonPanel))),
+                        isDisplayed()));
+        button3.check(matches(isDisplayed()));
+
     }
-    // TODO: make 3 more test as follows:
-    // #3 correct UI components is displayed for the search for classes tab.
-    // #4 member enrolls in a class and correct message is displayed.
-    // #5 member then checks if the class is showing in the enrolled class tab.
+
+
+    @Test
+    /** Testing the search classes button functionality, check if it goes to that page and correct UI components load up, here since no classes are available with instructor it should say that message.
+     *
+     */
+    public void memberActivityTest6() {
+
+    }
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
