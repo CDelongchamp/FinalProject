@@ -55,6 +55,11 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
 
         classInfo = new String[7];
 
+        List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
+        if (scheduledClasses.isEmpty()) {
+            noClassAlert();
+        }
+
         loadClassSpinnerData();
         classInfo = classSpinner.getSelectedItem().toString().split(" ");
         classId = getClassId();
@@ -274,7 +279,7 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
      * makes an alert pop on the screen to prompt the user
      */
     private void noClassAlert() {
+        Toast.makeText(MemberSearchClassesActivity.this,"No classes are available", Toast.LENGTH_SHORT).show();
         finish();
-        Toast.makeText(MemberSearchClassesActivity.this,"There are currently no classes available", Toast.LENGTH_SHORT).show();
     }
 }
