@@ -133,7 +133,7 @@ public class MemberViewClassesActivity extends AppCompatActivity {
         List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);
         List<String> labels = new ArrayList<>();
 
-        if (enrolledClasses.size() == 0) {
+        if (enrolledClasses.isEmpty()) {
             noClassAlert();
             return;
         }
