@@ -1,8 +1,11 @@
 package com.example.finalproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -93,17 +96,17 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
                 boolean isFull = checkCapacity();
                 if (!isFull && !isTimeConflicted) {
                     myDB.enrollInClass(username, classId);
-                    Toast.makeText(MemberSearchClassesActivity.this,"Successfully enrolled in the class.", Toast.LENGTH_SHORT);
+                    Toast.makeText(MemberSearchClassesActivity.this,"Successfully enrolled in the class.", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     if (isFull && isTimeConflicted) {
-                        Toast.makeText(MemberSearchClassesActivity.this,"The class is full and the time conflicts with another class.", Toast.LENGTH_SHORT);
+                        Toast.makeText(MemberSearchClassesActivity.this,"The class is full and the time conflicts with another class.", Toast.LENGTH_SHORT).show();
                     } else if (isFull) {
-                        Toast.makeText(MemberSearchClassesActivity.this,"The class is full.", Toast.LENGTH_SHORT);
+                        Toast.makeText(MemberSearchClassesActivity.this,"The class is full.", Toast.LENGTH_SHORT).show();
                     } else if (isTimeConflicted) {
-                        Toast.makeText(MemberSearchClassesActivity.this,"The time conflicts with another class.", Toast.LENGTH_SHORT);
+                        Toast.makeText(MemberSearchClassesActivity.this,"The time conflicts with another class.", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MemberSearchClassesActivity.this,"Unable to enroll.", Toast.LENGTH_SHORT);
+                        Toast.makeText(MemberSearchClassesActivity.this,"Unable to enroll.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -191,7 +194,6 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
                 selStartBeforeEnEnd = selectedStartTime.compareTo(enrolledEndTime) <= 0;
             }
 
-
             if (enStartBeforeSelEnd && selStartBeforeEnEnd) {
                 return true;
             }
@@ -237,6 +239,11 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         List<String> labels = new ArrayList<>();
         String date = selectDateEdit.getText().toString();
 
+        if (scheduledClasses.isEmpty()) {
+            noClassAlert();
+            return;
+        }
+
         for (String classInfo : scheduledClasses) {
 
             // check date
@@ -256,5 +263,26 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
 
         // attaching data adapter to spinner
         classSpinner.setAdapter(dataAdapter);
+    }
+
+    /**
+     * makes an alert pop on the screen to prompt the user
+     */
+    private void noClassAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("")
+                .setTitle("There are currently no classes available.")
+                .setPositiveButton("Go back", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 }

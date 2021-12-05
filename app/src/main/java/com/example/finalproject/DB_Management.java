@@ -77,7 +77,7 @@ public class DB_Management extends SQLiteOpenHelper {
         myDB.execSQL("INSERT INTO class_types(class_type, description) VALUES(\"Yoga\", \"Experience peace and relaxation!\")");
         myDB.execSQL("INSERT INTO class_types(class_type, description) VALUES(\"Kickboxing\", \"Boxing, but with kicks!\")");
         myDB.execSQL("INSERT INTO class_types(class_type, description) VALUES(\"Karate\", \"Half Art, Half Combat\")");
-        myDB.execSQL("INSERT INTO class_types(class_type, description) VALUES(\"Mortal Combat\", \"Nothing like Immortal Combat\")");
+        myDB.execSQL("INSERT INTO class_types(class_type, description) VALUES(\"MortalCombat\", \"Nothing like Immortal Combat\")");
 
         myDB.execSQL("INSERT INTO users(username, password) VALUES(\"admin\", \"admin123\")");
 
