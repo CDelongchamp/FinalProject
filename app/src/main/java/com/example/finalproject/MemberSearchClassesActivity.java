@@ -211,6 +211,11 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
         List<String> enrolledClasses = myDB.getAllClassesByEnrolment(username);
         List<String> labels = new ArrayList<>();
 
+        if (scheduledClasses.isEmpty()) {
+            noClassAlert();
+            return;
+        }
+
         for (String classInfo : scheduledClasses) {
 
             // check if already enrolled in
