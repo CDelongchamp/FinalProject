@@ -274,20 +274,7 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
      * makes an alert pop on the screen to prompt the user
      */
     private void noClassAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("")
-                .setTitle("There are currently no classes available.")
-                .setPositiveButton("Go back", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        builder.create();
-        builder.show();
+        finish();
+        Toast.makeText(MemberSearchClassesActivity.this,"There are currently no classes available", Toast.LENGTH_SHORT).show();
     }
 }

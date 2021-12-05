@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
 
         myDB = new DB_Management(this);
 
-        //TODO remove before submission
-        testing();
+//        //TODO remove before submission
+//        testing();
 //        createTestAccount();
 
         Login2Button.setOnClickListener(new View.OnClickListener() {
