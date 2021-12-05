@@ -261,6 +261,15 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
                 }
             }
         }
+
+        if (labels.isEmpty()) {
+            Toast.makeText(MemberSearchClassesActivity.this,"No classes are scheduled this day.", Toast.LENGTH_SHORT).show();
+            loadClassSpinnerData();
+            selectClassName.setText("");
+            selectDateEdit.setText("");
+            return;
+        }
+
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, labels);
 
@@ -289,6 +298,14 @@ public class MemberSearchClassesActivity extends AppCompatActivity {
                     labels.add(classInfo);
                 }
             }
+        }
+
+        if (labels.isEmpty()) {
+            Toast.makeText(MemberSearchClassesActivity.this,"No classes have this name.", Toast.LENGTH_SHORT).show();
+            loadClassSpinnerData();
+            selectClassName.setText("");
+            selectDateEdit.setText("");
+            return;
         }
 
         // Creating adapter for spinner
