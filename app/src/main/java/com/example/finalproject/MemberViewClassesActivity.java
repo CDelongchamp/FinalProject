@@ -116,9 +116,14 @@ public class MemberViewClassesActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Enroll to a class", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                        Intent intent = new Intent(getApplicationContext(),MemberSearchClassesActivity.class);
-                        startActivity(intent);
+                        List<String> scheduledClasses = myDB.getAllScheduledClassesWithID();
+                        if (!scheduledClasses.isEmpty()) {
+                            finish();
+                            Intent intent = new Intent(getApplicationContext(),MemberSearchClassesActivity.class);
+                            startActivity(intent);
+                        } else {
+                            finish();
+                        }
                     }
                 });
         builder.create();
